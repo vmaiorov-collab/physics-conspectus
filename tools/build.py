@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Собирает сайт: content/*.html + tools/figures.py + photos/ -> notes/*.html и index.html.
+"""Собирает сайт: content/*.html + tools/figures*.py -> notes/*.html и index.html.
 
     python3 tools/build.py
 """
-import base64
 import html
 import re
 import sys
@@ -12,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 from figures import F  # noqa: E402
+import figures2  # noqa: E402,F401
 
 SITE = "Конспекты по физике"
 HEAD = (ROOT / "template/head.html").read_text()
@@ -28,10 +28,6 @@ html[data-theme] .wrap th{text-transform:none;letter-spacing:0}
 .wrap figure.viz{margin:1.4em 0}
 .wrap figure.viz svg{display:block;width:100%;height:auto}
 .wrap .katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
-.originals{margin:2.4em 0 1em;border-top:1px solid var(--line);padding-top:1em}
-.originals summary{cursor:pointer;font-weight:700;font-size:1.05rem}
-.originals img{display:block;width:100%;height:auto;margin:14px 0 4px;border:1px solid var(--line);border-radius:8px}
-.originals p{font-size:.85rem;opacity:.7;margin:0 0 8px}
 </style>
 """
 
@@ -49,11 +45,6 @@ def plain(s):
     return html.unescape(re.sub(r"<[^>]+>|\$", "", s)).strip()
 
 
-def photo(name):
-    data = base64.b64encode((ROOT / "photos" / f"{name}.jpg").read_bytes()).decode()
-    return f"data:image/jpeg;base64,{data}"
-
-
 def lesson(i, L, lessons, used):
     def sub(m):
         used.add(m.group(1))
@@ -62,9 +53,6 @@ def lesson(i, L, lessons, used):
     body = re.sub(r"§(\w+)§", sub, L["body"])
     toc = "".join(f'<li><a href="#{a}">{re.sub(r"^[0-9]+[.] ", "", t)}</a></li>'
                   for a, t in re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body))
-    pages = L["pages"].split()
-    imgs = "".join(f'<img src="{photo(p)}" alt="Страница тетради {n} из {len(pages)}: {L["title"]}" loading="lazy">'
-                   f"<p>Страница {n} из {len(pages)}</p>" for n, p in enumerate(pages, 1))
     chips = "".join(f'<span class="chip">{c.strip()}</span>' for c in L["chips"].replace("&amp;", "\0").split(";")).replace("\0", "&amp;")
     pager = ""
     if i > 0:
@@ -100,7 +88,6 @@ def lesson(i, L, lessons, used):
   <ol>{toc}</ol>
 </nav>
 {body}
-<details class="originals"><summary>Страницы тетради ({len(pages)})</summary>{imgs}</details>
 
 <footer>
   Конспект составлен по рукописным записям занятий. Чертежи перерисованы; дополнения и исправления отмечены в тексте.
@@ -120,12 +107,10 @@ def index(lessons):
     for i, L in enumerate(lessons):
         items = "".join(f"<li>{c.strip()}</li>" for c in L["cards"].split("|"))
         key = plain(" ".join([L["title"], L["sub"], L["chips"], L["cards"], " ".join(re.findall(r"<h[23][^>]*>(.*?)</h[23]>", L["body"]))])).lower()
-        n = len(L["pages"].split())
-        word = "страница" if n % 10 == 1 and n != 11 else "страницы" if 2 <= n % 10 <= 4 else "страниц"
         cards.append(f'<a class="pcard" href="notes/{L["file"]}" data-k="{html.escape(key, quote=True)}"><div class="ph">'
                      f'<span class="badge" style="background:var({colors[i % 5]})">{i+1}</span><h3>{L["title"]}</h3></div>'
-                     f'<ul class="tl">{items}</ul><div class="pf"><span>{n} {word} тетради</span><em>→</em></div></a>')
-    pages = len({p for L in lessons for p in L["pages"].split()})
+                     f'<ul class="tl">{items}</ul><div class="pf"><span>чертежей: {L["body"].count("§") // 2}</span><em>→</em></div></a>')
+    drawings = sum(L["body"].count("§") // 2 for L in lessons)
     return f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -150,11 +135,11 @@ def index(lessons):
     <div class="hmain">
       <span class="chip">Механика</span>
       <h1>Конспекты по <span class="hi">физике</span></h1>
-      <p>Определения, выводы формул, чертежи и разобранные задачи. К каждой теме приложены страницы тетради.</p>
+      <p>Определения, выводы формул, чертежи и разобранные задачи. Все рисунки нарисованы заново в SVG.</p>
       <div class="cta"><a class="btn1" href="#pick">Выбрать тему</a></div>
       <div class="sbox"><div class="search"><input id="q" type="search" placeholder="Поиск по темам: блоки, момент, пружина…" autocomplete="off" aria-label="Поиск по темам"></div></div>
     </div>
-    <div class="hstats"><div><b>{len(lessons)}</b><span>тем</span></div><div><b>{pages}</b><span>фото страниц и разворотов тетради</span></div><div><b>1</b><span>файл на тему — читается офлайн</span></div></div>
+    <div class="hstats"><div><b>{len(lessons)}</b><span>тем</span></div><div><b>{drawings}</b><span>чертежей к темам и задачам</span></div><div><b>1</b><span>файл на тему — читается офлайн</span></div></div>
   </div>
 </section>
 
@@ -181,17 +166,13 @@ btn.addEventListener("click",function(){{var next=root.getAttribute("data-theme"
 def main():
     lessons = [read(p) for p in sorted((ROOT / "content").glob("*.html"))]
     (ROOT / "notes").mkdir(exist_ok=True)
-    used, photos = set(), []
+    used = set()
     for i, L in enumerate(lessons):
         out = lesson(i, L, lessons, used)
-        assert "§" not in L["body"] or "§" not in re.sub(r"data:[^\"]+", "", out.split('<div class="wrap">')[1].split("<script")[0])
         (ROOT / "notes" / L["file"]).write_text(out)
-        photos += L["pages"].split()
         print(f'{L["file"]}: {len(out)//1024} КБ')
     (ROOT / "index.html").write_text(index(lessons))
-    have = {p.stem for p in (ROOT / "photos").glob("*.jpg")}
     print("фигуры без места:", sorted(set(F) - used))
-    print("фото без темы:", sorted(have - set(photos)))
 
 
 if __name__ == "__main__":

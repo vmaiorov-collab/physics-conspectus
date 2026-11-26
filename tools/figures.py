@@ -29,7 +29,7 @@ class S:
     def text(self, x, y, s, c=TEXT, size=17, anchor="middle", it=False):
         st = ' font-style="italic"' if it else ""
         # "x_кон" -> x с нижним индексом
-        s = re.sub(r"_([A-Za-zА-Яа-я0-9]+)",
+        s = re.sub(r"_([0-9]+|[A-Za-zА-Яа-я]+)",
                    lambda m: f'<tspan dy="4" font-size="72%">{m.group(1)}</tspan><tspan dy="-4">\u200b</tspan>', s)
         return self.raw(f'<text x="{x:.1f}" y="{y:.1f}" fill="{c}" font-size="{size}" text-anchor="{anchor}"{st}>{s}</text>')
 
@@ -314,21 +314,6 @@ def pul_basic():
     s.path("M510,170 A26,26 0 0 0 562,170", TEXT, 2).arrow(562, 170, 562, 75, YELLOW)
     s.line(536, 170, 536, 225, TEXT).rect(510, 225, 52, 42).text(536, 252, "m", BLUE)
     s.text(600, 105, "T", YELLOW, 19).text(485, 110, "T", YELLOW, 19).text(640, 215, "2T = mg", TEXT, 19)
-    return s.svg()
-
-
-@fig
-def pul_four():
-    s = S(520, 320, "Платформа на двух подвижных блоках: натяжение равно четверти веса")
-    s.ground(70, 450, 40, True)
-    s.pulley(260, 100, 28).line(260, 40, 260, 72, TEXT)
-    s.line(130, 40, 130, 190, TEXT).path("M130,190 A30,30 0 0 0 190,190", TEXT, 2).path("M190,190 L232,100 A28,28 0 0 1 288,100 L330,190 A30,30 0 0 0 390,190 L390,40", TEXT, 2)
-    s.pulley(160, 190, 30).pulley(360, 190, 30)
-    s.line(160, 190, 160, 250, TEXT).line(360, 190, 360, 250, TEXT).rect(120, 250, 280, 36)
-    s.text(260, 274, "m", BLUE, 19)
-    for x in (122, 198, 322, 398):
-        s.text(x, 150, "T", YELLOW, 17)
-    s.text(305, 62, "2T", YELLOW, 16).arrow(260, 286, 260, 318, RED).text(300, 312, "mg", RED)
     return s.svg()
 
 
