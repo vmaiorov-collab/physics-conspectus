@@ -30,9 +30,9 @@ def vec_order():
     s = S(560, 340, "The vector sum on grid paper does not depend on order: 6 squares right and 8 up")
     k, ox, oy = 30, 90, 300
     for i in range(13):
-        s.line(ox + i * k, 20, ox + i * k, oy + 20, "#2a3446", 1)
+        s.line(ox + i * k, 20, ox + i * k, oy + 20, '#9aa4b2" stroke-opacity="0.28', 1)
     for j in range(10):
-        s.line(ox - 20, oy - j * k, ox + 12 * k, oy - j * k, "#2a3446", 1)
+        s.line(ox - 20, oy - j * k, ox + 12 * k, oy - j * k, '#9aa4b2" stroke-opacity="0.28', 1)
     P = lambda x, y: (ox + x * k, oy - y * k)
     s.arrow(*P(0, 0), *P(4, 2), BLUE).arrow(*P(4, 2), *P(6, 8), GREEN)
     s.arrow(*P(0, 0), *P(2, 6), GREEN, 2, "7 5").arrow(*P(2, 6), *P(6, 8), BLUE, 2, "7 5")
@@ -345,7 +345,7 @@ def dens_holes():
         s.line(x + i * a, y, x + i * a, y + 180, BLUE, 1.5).line(x, y + i * a, x + 180, y + i * a, BLUE, 1.5)
         s.line(x + i * a, y, x + i * a + 81, y - 81, BLUE, 1.5)
         s.line(x + i * 27, y - i * 27, x + 180 + i * 27, y - i * 27, BLUE, 1.5)
-    s.rect(x + a, y + a, a, a, ORANGE, "#000000", 0)
+    s.rect(x + a, y + a, a, a, ORANGE, '#9aa4b2" fill-opacity="0.65', 0)
     s.text(430, 130, "27 − 7 = 20", YELLOW, 20).text(430, 165, "M = 20m", TEXT, 19)
     return s.svg()
 

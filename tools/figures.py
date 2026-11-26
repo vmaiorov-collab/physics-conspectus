@@ -264,7 +264,7 @@ def acc_incline():
     Y = lambda a: 250 - a * .85
     s.axes(80, 250, 530, 230, "sin φ", "a, cm/s²")
     for a in (50, 100, 150, 200, 250):
-        s.line(80, Y(a), 590, Y(a), "#2a3446", 1).text(68, Y(a) + 5, str(a), MUTED, 14, "end")
+        s.line(80, Y(a), 590, Y(a), '#9aa4b2" stroke-opacity="0.28', 1).text(68, Y(a) + 5, str(a), MUTED, 14, "end")
     k = sum(x * y for x, y in pts) / sum(x * x for x, y in pts)
     s.line(X(0), Y(0), X(.5), Y(.5 * k), YELLOW, 1.8, "8 6")
     for x, a in pts:
@@ -399,7 +399,7 @@ def hooke_spring_fit():
     Y = lambda v: 260 - v * 68
     s.axes(80, 260, 530, 235, "n", "L/n, cm")
     for v in (1, 2, 3):
-        s.line(80, Y(v), 590, Y(v), "#2a3446", 1).text(66, Y(v) + 5, str(v), MUTED, 14, "end")
+        s.line(80, Y(v), 590, Y(v), '#9aa4b2" stroke-opacity="0.28', 1).text(66, Y(v) + 5, str(v), MUTED, 14, "end")
     s.line(X(14), Y(b + k * 14), X(49), Y(b + k * 49), YELLOW, 1.8, "8 6")
     for n, v in pts:
         s.dot(X(n), Y(v), BLUE, 6).text(X(n), 282, str(n), MUTED, 13)
