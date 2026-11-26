@@ -1,83 +1,84 @@
 <!--
-title: Кинематика и графики движения
-sub: Траектория, путь и перемещение; средняя и мгновенная скорость; графики пути, перемещения и скорости; наклон и площадь под графиком.
-chips: Kinematics; Графики 1D-движения
-cards: Путь и перемещение | Скорость | Наклон графика | Площадь под v(t)
+title: Kinematics and motion graphs
+sub: Trajectory, distance and displacement; average and instantaneous speed; distance, displacement and velocity graphs; slope and area under a graph.
+chips: Kinematics; 1D motion graphs
+cards: Distance and displacement | Speed | Slope of a graph | Area under v(t)
 -->
-<h2 id="s1">1. Что изучает кинематика</h2>
-<p><strong>Кинематика</strong> описывает движение тел, не обсуждая его причин (никаких сил).</p>
+<h2 id="s1">1. What kinematics studies</h2>
+<p><strong>Kinematics</strong> describes the motion of bodies without discussing its causes (no forces at all).</p>
 <ul>
-<li><strong>Траектория</strong> (trajectory) — линия, по которой тело движется с течением времени.</li>
-<li><strong>Путь</strong> $S$ (distance) — длина траектории, скаляр, $[S] = \text{м}$.</li>
-<li><strong>Перемещение</strong> $\vec d$ (displacement) — вектор изменения положения, из начальной точки в конечную.</li>
+<li><strong>Trajectory</strong>: the line along which a body moves over time.</li>
+<li><strong>Distance</strong> $S$: the length of the trajectory, a scalar, $[S] = \text{m}$.</li>
+<li><strong>Displacement</strong> $\vec d$: the vector of the change of position, from the starting point to the final one.</li>
 </ul>
 §kin_path§
-<div class="note"><span class="lbl">Неравенство</span><p>$S \ge |\vec d|$: кратчайший путь между двумя точками — отрезок. Равенство бывает только при движении по прямой в одну сторону.</p></div>
+<div class="note"><span class="lbl">Inequality</span><p>$S \ge |\vec d|$: the shortest path between two points is a straight segment. Equality holds only for motion along a straight line in one direction.</p></div>
 
-<h2 id="s2">2. Скорость</h2>
-<p>Средняя путевая скорость (average speed) говорит, <em>насколько быстро</em> вы двигались, а средняя векторная (average velocity) — ещё и <em>в какую сторону</em>:</p>
+<h2 id="s2">2. Speed and velocity</h2>
+<p>Average speed says <em>how fast</em> you moved, while average velocity also says <em>in which direction</em>:</p>
 $$\langle v\rangle = \frac{S}{t}, \qquad \langle\vec v\rangle = \frac{\vec d}{t}.$$
-<p>Если скорость меняется, берут очень короткий промежуток — получается мгновенная скорость:</p>
+<p>If the speed changes, take a very short interval; this gives the instantaneous speed and velocity:</p>
 $$v = \lim_{\Delta t\to0}\frac{\Delta S}{\Delta t}, \qquad \vec v = \lim_{\Delta t\to0}\frac{\Delta\vec d}{\Delta t}.$$
 
-<h2 id="s3">3. График пути S(t)</h2>
+<h2 id="s3">3. Distance–time graph S(t)</h2>
 <ul>
-<li>$S(t) \ge 0$ и $\dfrac{dS}{dt} \ge 0$ в любой момент: путь не убывает.</li>
-<li>Скорость — угловой коэффициент касательной (gradient), $v = \dfrac{dS}{dt}$.</li>
-<li>Средняя скорость — угловой коэффициент секущей, $\langle v\rangle = S_\text{всё}/t_\text{всё}$.</li>
+<li>$S(t) \ge 0$ and $\dfrac{dS}{dt} \ge 0$ at every moment: distance never decreases.</li>
+<li>Speed is the gradient of the tangent, $v = \dfrac{dS}{dt}$.</li>
+<li>Average speed is the gradient of the secant, $\langle v\rangle = S_\text{total}/t_\text{total}$.</li>
 </ul>
 §kin_tangent§
-<h3 id="s3-1">Пример</h3>
+<h3 id="s3-1">Example</h3>
 §kin_st_example§
-<table><tr><th>Участок</th><th>Скорость</th></tr>
-<tr><td>$0\ldots3$ с</td><td>$12/3 = 4$ м/с</td></tr>
-<tr><td>$3\ldots5$ с</td><td>$0$ (стоим)</td></tr>
-<tr><td>$5\ldots10$ с</td><td>$(22-12)/(10-5) = 2$ м/с</td></tr></table>
-<p>Средняя за все 10 с: $\langle v\rangle = 22/10 = 2{,}2$ м/с. За первые 5 с: $12/5 = 2{,}4$ м/с. Это не среднее арифметическое скоростей участков.</p>
+<table><tr><th>Segment</th><th>Speed</th></tr>
+<tr><td>$0\ldots3$ s</td><td>$12/3 = 4$ m/s</td></tr>
+<tr><td>$3\ldots5$ s</td><td>$0$ (standing)</td></tr>
+<tr><td>$5\ldots10$ s</td><td>$(22-12)/(10-5) = 2$ m/s</td></tr></table>
+<p>Average over all 10 s: $\langle v\rangle = 22/10 = 2.2$ m/s. Over the first 5 s: $12/5 = 2.4$ m/s. This is not the arithmetic mean of the segment speeds.</p>
 
-<h2 id="s4">4. Три графика одного движения</h2>
-<p>По графику пути строим график мгновенной скорости (наклон) и график средней скорости ($\langle v\rangle(t) = S(t)/t$).</p>
+<h2 id="s4">4. Three graphs of one motion</h2>
+<p>From the distance graph we build the graph of instantaneous speed (the slope) and of average speed ($\langle v\rangle(t) = S(t)/t$).</p>
 §kin_three§
-<p>Пока скорость постоянна, средняя совпадает с мгновенной. Во время остановки мгновенная скорость равна нулю, а средняя плавно убывает: $\langle v\rangle = 8/t$, от 4 до $8/3$ м/с. После старта она снова растёт и при $t=4$ с равна $12/4 = 3$ м/с.</p>
+<p>While the speed is constant, the average equals the instantaneous one. During the stop the instantaneous speed is zero, while the average falls smoothly: $\langle v\rangle = 8/t$, from 4 to $8/3$ m/s. After the restart it grows again and equals $12/4 = 3$ m/s at $t=4$ s.</p>
 
-<h2 id="s5">5. График перемещения $d_x(t)$</h2>
+<h2 id="s5">5. Displacement graph $d_x(t)$</h2>
 <ul>
-<li>$d_x$ может быть отрицательным;</li>
-<li>производная $\dfrac{d}{dt}d_x(t)$ тоже может быть отрицательной — тело движется против оси;</li>
-<li>$\langle v_x\rangle = \dfrac{d_{x}}{t}$ за всё время;</li>
-<li>$v_x$ — производная (наклон) $d_x(t)$.</li>
+<li>$d_x$ can be negative;</li>
+<li>the derivative $\dfrac{d}{dt}d_x(t)$ can be negative too: the body moves against the axis;</li>
+<li>$\langle v_x\rangle = \dfrac{d_{x}}{t}$ over the whole time;</li>
+<li>$v_x$ is the derivative (slope) of $d_x(t)$.</li>
 </ul>
 §kin_dx§
-<h3 id="s5-1">От координаты к пути и скорости</h3>
-<p>По одному графику $x(t)$ строятся три других:</p>
+<h3 id="s5-1">From position to distance and speed</h3>
+<p>One graph $x(t)$ gives three others:</p>
 <ul>
-<li>путь $d(t)$: там, где координата убывает, участок графика «отражается» вверх — путь только растёт;</li>
-<li>проекция скорости $v_x(t)$ — наклон $x(t)$; она равна нулю в точках поворота;</li>
-<li>модуль скорости $v(t) = |v_x(t)|$.</li>
+<li>distance $d(t)$: where the position decreases, that part of the graph is “reflected” upwards, since distance only grows;</li>
+<li>velocity component $v_x(t)$ is the slope of $x(t)$; it is zero at the turning points;</li>
+<li>speed $v(t) = |v_x(t)|$.</li>
 </ul>
 §kin_convert§
 
-<h2 id="s6">6. График скорости $v_x(t)$</h2>
-<div class="note"><span class="lbl">Главное свойство</span><p>Площадь под графиком $v_x(t)$ равна перемещению. Часть под осью берётся со знаком «минус».</p></div>
+<h2 id="s6">6. Velocity graph $v_x(t)$</h2>
+<div class="note"><span class="lbl">Key property</span><p>The area under the $v_x(t)$ graph equals the displacement. The part below the axis counts with a minus sign.</p></div>
 §kin_area§
-
-<p>При равномерном движении скорость не зависит ни от времени, ни от координаты: график $v(x)$ — горизонтальный отрезок, например $v = 4$ м/с при $x$ от $-4$ до $4$ м.</p>
+<p>In uniform motion the speed depends neither on time nor on position: the graph $v(x)$ is a horizontal segment, for example $v = 4$ m/s for $x$ from $-4$ to $4$ m.</p>
 §kin_vx_uniform§
-<h2 id="s7">7. Задача: горка против ямы</h2>
-<p>Два шарика стартуют с одной скоростью $s$. На первой дорожке есть горка (там шарик замедляется), на второй — такая же по форме яма (там он ускоряется). Кто быстрее?</p>
+
+<h2 id="s7">7. Problem: hill versus dip</h2>
+<p>Two balls start with the same speed $s$. The first track has a hill (the ball slows down on it), the second has a dip of the same shape (the ball speeds up in it). Which one is faster?</p>
 §kin_hill§
-<p>Обозначим $A \gt 0$ площадь «отклонения» графика от постоянной скорости. За одно и то же время $t$ шарики проходят</p>
+<p>Let $A \gt 0$ be the area by which the graph deviates from the constant speed. In the same time $t$ the balls travel</p>
 $$\int_0^t T(t)\,dt = st - A, \qquad \int_0^t B(t)\,dt = st + A.$$
-<p><strong>От противного:</strong> если за равное время пройдены равные расстояния, то $st - A = st + A$, то есть $A = 0$. Но тогда не было бы ни горки, ни ямы — противоречие. Так как $-A \lt A$, шарик на дорожке с ямой за то же время уезжает дальше: <strong>нижняя дорожка быстрее</strong>.</p>
-<div class="note"><span class="lbl">Важное дополнение</span><p>Рассуждение опирается на то, что горка и яма одинаковы по форме: графики отклоняются от постоянной скорости $s$ на одну и ту же площадь $A$, а расстояние, которое надо пройти, у шариков одно.</p></div>
-<h2 id="s8">8. Задача: четыре графика одного движения</h2>
-<p>Тело за первую секунду прошло от $x = 0$ до $4$ м, одну секунду стояло, а за третью секунду вернулось в точку $x = 2$ м. Построить $S(t)$, $\langle v\rangle(t)$ и $v(x)$.</p>
+<p><strong>By contradiction:</strong> if equal distances were covered in equal time, then $st - A = st + A$, so $A = 0$. But then there would be neither a hill nor a dip, a contradiction. Since $-A \lt A$, the ball on the track with the dip gets further in the same time: <strong>the lower track is faster</strong>.</p>
+<div class="note"><span class="lbl">Important addition</span><p>The argument relies on the hill and the dip having the same shape: the graphs deviate from the constant speed $s$ by the same area $A$, and both balls have the same distance to cover.</p></div>
+
+<h2 id="s8">8. Problem: four graphs of one motion</h2>
+<p>In the first second a body goes from $x = 0$ to $4$ m, stands still for one second, and during the third second returns to $x = 2$ m. Plot $S(t)$, $\langle v\rangle(t)$ and $v(x)$.</p>
 §kin_ex42§
-<table><tr><th>$t$, с</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
-<tr><th>$S$, м</th><td>0</td><td>4</td><td>4</td><td>6</td></tr></table>
+<table><tr><th>$t$, s</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+<tr><th>$S$, m</th><td>0</td><td>4</td><td>4</td><td>6</td></tr></table>
 <ul>
-<li>Средняя путевая скорость: $4$ м/с на первом участке, $4/t$ во время остановки, $2$ м/с на третьем.</li>
-<li>$v(x)$: «вперёд» со скоростью $4$ м/с от $x=0$ до $4$ м, «назад» со скоростью $2$ м/с от $4$ до $2$ м.</li>
+<li>Average speed: $4$ m/s on the first segment, $4/t$ during the stop, $2$ m/s on the third.</li>
+<li>$v(x)$: “forward” at $4$ m/s from $x=0$ to $4$ m, “back” at $2$ m/s from $4$ to $2$ m.</li>
 </ul>
-<h3 id="s8-1">Ещё две задачи из тетради</h3>
-<p>К задаче 4.4 записан только ответ: <strong>4 м и 1 м/с</strong> — условия в тетради нет. К задаче 4.5 сделан набросок с величинами $v$, $L$ и $u$, решение не записано.</p>
+<h3 id="s8-1">Two more problems from the notebook</h3>
+<p>For problem 4.4 only the answer is written down: <strong>4 m and 1 m/s</strong>; the statement is not in the notebook. For problem 4.5 there is a sketch with the quantities $v$, $L$ and $u$ and no solution.</p>

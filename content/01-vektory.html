@@ -1,58 +1,58 @@
 <!--
-title: Векторы и проекции
-sub: Что такое вектор, чем векторные величины отличаются от скалярных, действия с векторами, координаты, радиус-вектор и проекция на ось.
-chips: Математический аппарат; Vectors &amp; projection
-cards: Скаляры и векторы | Сложение и вычитание | Проекции | Радиус-вектор
+title: Vectors and projections
+sub: What a vector is, how vector quantities differ from scalars, operations on vectors, coordinates, the position vector and the projection onto an axis.
+chips: Maths toolkit; Vectors &amp; projection
+cards: Scalars and vectors | Adding and subtracting | Projections | Position vector
 -->
-<h2 id="s1">1. Вектор</h2>
-<p><strong>Вектор</strong> — направленный отрезок (directed line segment); строже — класс всех равных направленных отрезков (equivalency class). У вектора две характеристики: <strong>модуль</strong> (длина, magnitude) и <strong>направление</strong>. Модуль вектора $\overrightarrow{AB}$ обозначают $|\overrightarrow{AB}| = AB$.</p>
-<div class="note"><span class="lbl">Два типа величин</span>
-<p><strong>Векторные</strong> (vector quantities) имеют направление: скорость $\vec v$, сила $\vec F$, ускорение $\vec a$.<br><strong>Скалярные</strong> (scalar quantities) направления не имеют: путь, время, масса.</p></div>
+<h2 id="s1">1. Vector</h2>
+<p>A <strong>vector</strong> is a directed line segment; strictly, the class of all equal directed segments (an equivalence class). A vector has two characteristics: <strong>magnitude</strong> (length) and <strong>direction</strong>. The magnitude of $\overrightarrow{AB}$ is written $|\overrightarrow{AB}| = AB$.</p>
+<div class="note"><span class="lbl">Two kinds of quantities</span>
+<p><strong>Vector quantities</strong> have a direction: velocity $\vec v$, force $\vec F$, acceleration $\vec a$.<br><strong>Scalar quantities</strong> have no direction: distance, time, mass.</p></div>
 
-<h2 id="s2">2. Действия с векторами</h2>
-<h3 id="s2-1">Умножение на число</h3>
-<p>Для $\lambda \in \mathbb R$ вектор $\lambda\vec a$ имеет модуль $|\lambda|\cdot|\vec a|$. При $\lambda \gt 0$ он сонаправлен с $\vec a$ ($\uparrow\uparrow$), при $\lambda \lt 0$ — направлен противоположно ($\uparrow\downarrow$).</p>
+<h2 id="s2">2. Operations on vectors</h2>
+<h3 id="s2-1">Multiplication by a number</h3>
+<p>For $\lambda \in \mathbb R$ the vector $\lambda\vec a$ has magnitude $|\lambda|\cdot|\vec a|$. If $\lambda \gt 0$ it points the same way as $\vec a$ ($\uparrow\uparrow$), if $\lambda \lt 0$ the opposite way ($\uparrow\downarrow$).</p>
 §vec_scalar§
-<h3 id="s2-2">Сумма и разность</h3>
-<p><strong>Правило треугольника</strong>: начало $\vec b$ ставим в конец $\vec a$; сумма $\vec c = \vec a + \vec b$ идёт из начала $\vec a$ в конец $\vec b$. <strong>Правило параллелограмма</strong>: оба вектора откладываем из одной точки, сумма — диагональ.</p>
-<p>Разность сводится к сумме: $\vec a - \vec b = \vec a + (-1)\cdot\vec b$.</p>
+<h3 id="s2-2">Sum and difference</h3>
+<p><strong>Triangle rule</strong>: put the tail of $\vec b$ at the head of $\vec a$; the sum $\vec c = \vec a + \vec b$ goes from the tail of $\vec a$ to the head of $\vec b$. <strong>Parallelogram rule</strong>: draw both vectors from one point, the sum is the diagonal.</p>
+<p>A difference reduces to a sum: $\vec a - \vec b = \vec a + (-1)\cdot\vec b$.</p>
 §vec_ops§
 
-<h2 id="s3">3. Координаты и радиус-вектор</h2>
-<p>Раньше точку $A$ задавали парой чисел $(x_A, y_A)$. Теперь то же самое записываем одним вектором из начала координат — <strong>радиус-вектором</strong> (position vector): $\vec r_A = \overrightarrow{OA}$.</p>
-<p>Если $\vec i$ и $\vec j$ — единичные векторы осей, $|\vec i| = |\vec j| = 1$, то</p>
+<h2 id="s3">3. Coordinates and the position vector</h2>
+<p>Before, a point $A$ was given by a pair of numbers $(x_A, y_A)$. Now we write the same thing as a single vector from the origin, the <strong>position vector</strong>: $\vec r_A = \overrightarrow{OA}$.</p>
+<p>If $\vec i$ and $\vec j$ are the unit vectors of the axes, $|\vec i| = |\vec j| = 1$, then</p>
 $$\vec r_A = x_A\,\vec i + y_A\,\vec j = \begin{pmatrix} x_A \\ y_A \end{pmatrix}.$$
 
-<h2 id="s4">4. Проекция на ось</h2>
-<p><strong>Проекция</strong> $a_x$ вектора $\vec a$ на ось $Ox$ — это <em>число</em>:</p>
-$$a_x = x_\text{кон} - x_\text{нач}.$$
+<h2 id="s4">4. Projection onto an axis</h2>
+<p>The <strong>projection</strong> $a_x$ of a vector $\vec a$ onto the $Ox$ axis is a <em>number</em>:</p>
+$$a_x = x_\text{end} - x_\text{start}.$$
 <ul>
-<li>$a_x \gt 0$, если вектор «смотрит» вдоль оси;</li>
-<li>$a_x \lt 0$, если против оси;</li>
-<li>$a_x = 0$, если $\vec a \perp Ox$.</li>
+<li>$a_x \gt 0$ if the vector points along the axis;</li>
+<li>$a_x \lt 0$ if it points against the axis;</li>
+<li>$a_x = 0$ if $\vec a \perp Ox$.</li>
 </ul>
 §vec_proj§
 
-<h2 id="s5">5. Задачи</h2>
-<h3 id="s5-1">Меняется ли сумма от порядка слагаемых</h3>
-<p>Нет. На клетчатой бумаге каждый вектор — это «столько-то клеток вправо и столько-то вверх». При сложении смещения просто складываются, а сумма чисел от порядка не зависит.</p>
-<p>Пример из тетради: $\vec a$ и $\vec b$ в обоих порядках дают один и тот же вектор — 6 клеток вправо и 8 вверх. Так же по клеткам строятся $\vec a - \vec b$ и $\vec a + \vec b + \vec c$.</p>
+<h2 id="s5">5. Problems</h2>
+<h3 id="s5-1">Does the sum depend on the order of the terms?</h3>
+<p>No. On grid paper every vector is “so many squares right and so many up”. Adding vectors just adds these shifts, and a sum of numbers does not depend on order.</p>
+<p>Example from the notebook: $\vec a$ and $\vec b$ in either order give the same vector, 6 squares right and 8 up. $\vec a - \vec b$ and $\vec a + \vec b + \vec c$ are built square by square in the same way.</p>
 §vec_order§
-<h3 id="s5-2">Построить 5a + 3b и −a − 2b</h3>
-<p>Векторы откладываются цепочкой: начало следующего — в конце предыдущего. Результат идёт из начала первого в конец последнего. Знак «минус» разворачивает вектор.</p>
+<h3 id="s5-2">Construct 5a + 3b and −a − 2b</h3>
+<p>Draw the vectors as a chain: each one starts where the previous one ends. The result goes from the start of the first to the end of the last. A minus sign reverses a vector.</p>
 §vec_combo§
-<h3 id="s5-3">Две перпендикулярные силы: 6 Н и 8 Н</h3>
-$$F = \sqrt{(6\,\text{Н})^2 + (8\,\text{Н})^2} = \sqrt{100\,\text{Н}^2} = 10\,\text{Н}.$$
-<p>Угол с силой $\vec F_1$: $\sin\theta = \dfrac{8}{10} = \dfrac45$, значит $\theta = \arcsin\dfrac45 \approx 53^\circ$.</p>
+<h3 id="s5-3">Two perpendicular forces: 6 N and 8 N</h3>
+$$F = \sqrt{(6\,\text{N})^2 + (8\,\text{N})^2} = \sqrt{100\,\text{N}^2} = 10\,\text{N}.$$
+<p>Angle with the force $\vec F_1$: $\sin\theta = \dfrac{8}{10} = \dfrac45$, so $\theta = \arcsin\dfrac45 \approx 53^\circ$.</p>
 §vec_forces§
-<div class="warn"><span class="lbl">Исправление</span><p>В тетради угол записан как $\sin(4/5)$. Нужен обратный синус: $\theta = \arcsin(4/5)$. Направление вектора задаётся именно углом.</p></div>
-<h3 id="s5-4">Знаки проекций</h3>
-<p>Приём для любого вектора на рисунке: отдельно посмотреть, куда он смещает по горизонтали (знак $a_x$) и куда по вертикали (знак $a_y$). Вектор, параллельный одной из осей, имеет нулевую проекцию на другую.</p>
+<div class="warn"><span class="lbl">Correction</span><p>The notebook writes the angle as $\sin(4/5)$. The inverse sine is needed: $\theta = \arcsin(4/5)$. It is the angle that gives the direction of the vector.</p></div>
+<h3 id="s5-4">Signs of projections</h3>
+<p>A trick for any vector in a drawing: look separately at where it shifts horizontally (the sign of $a_x$) and vertically (the sign of $a_y$). A vector parallel to one axis has zero projection onto the other.</p>
 §vec_signs§
-<table><tr><th>Проекция</th><th>$\gt 0$</th><th>$= 0$</th><th>$\lt 0$</th></tr>
-<tr><td>на $Ox$</td><td>$a, d, f$</td><td>$c$</td><td>$b, e$</td></tr>
-<tr><td>на $Oy$</td><td>$a, b, c$</td><td>$f$</td><td>$d, e$</td></tr></table>
-<h3 id="s5-5">Сумма пяти векторов</h3>
-<p>Пять векторов образуют замкнутую цепочку: конец последнего совпадает с началом первого. Значит</p>
+<table><tr><th>Projection</th><th>$\gt 0$</th><th>$= 0$</th><th>$\lt 0$</th></tr>
+<tr><td>on $Ox$</td><td>$a, d, f$</td><td>$c$</td><td>$b, e$</td></tr>
+<tr><td>on $Oy$</td><td>$a, b, c$</td><td>$f$</td><td>$d, e$</td></tr></table>
+<h3 id="s5-5">Sum of five vectors</h3>
+<p>Five vectors form a closed chain: the end of the last one meets the start of the first. Therefore</p>
 $$\vec v_1 + \vec v_2 + \vec v_3 + \vec v_4 + \vec v_5 = \vec 0.$$
 §vec_polygon§

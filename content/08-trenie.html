@@ -1,38 +1,38 @@
 <!--
-title: Силы трения
-sub: Трение покоя, скольжения, качения и вязкое трение: от чего зависят и куда направлены.
-chips: Friction; Теория
-cards: Покой и скольжение | Качение | Вязкое трение | Направление
+title: Friction forces
+sub: Static, kinetic, rolling and viscous friction: what they depend on and which way they point.
+chips: Friction; Theory
+cards: Static and kinetic | Rolling | Viscous friction | Direction
 -->
-<h2 id="s1">1. Откуда берётся трение</h2>
-<p>Идеально гладких поверхностей не бывает: между телами есть зазор, и касаются они лишь неровностями, которые цепляются друг за друга.</p>
+<h2 id="s1">1. Where friction comes from</h2>
+<p>Perfectly smooth surfaces do not exist: there is a gap between bodies, and they touch only at bumps that catch on each other.</p>
 §fric_rough§
-<p>Виды трения: <strong>скольжения</strong>, <strong>покоя</strong>, <strong>качения</strong> и <strong>вязкое</strong>.</p>
+<p>Kinds of friction: <strong>kinetic</strong> (sliding), <strong>static</strong>, <strong>rolling</strong> and <strong>viscous</strong>.</p>
 
-<h2 id="s2">2. Покой и скольжение</h2>
-<p>Пока тело покоится, трение подстраивается под тягу: $F_\text{тр} = F$. Сдвинуть тело с места труднее, чем потом поддерживать движение, — это <strong>явление застоя</strong>.</p>
+<h2 id="s2">2. Static and kinetic friction</h2>
+<p>While a body is at rest, friction adjusts to the pull: $F_\text{fr} = F$. Getting a body moving is harder than keeping it moving afterwards; this is the <strong>stick effect</strong>.</p>
 §fric_graph§
-$$F_\text{тр.ск} \sim N, \qquad F_\text{тр.ск} = \mu N.$$
-<p>Коэффициент $\mu$ зависит от материалов и состояния поверхностей, $N$ — нормальная реакция опоры.</p>
-<div class="note"><span class="lbl">Важное дополнение</span><p>Для покоя выполняется неравенство $F_\text{тр.пок} \le \mu_\text{пок}N$, причём обычно $\mu_\text{пок} \gt \mu$. Формулу $F = \mu N$ нельзя писать для покоящегося тела, пока оно не на грани срыва.</p></div>
+$$F_\text{fr,k} \sim N, \qquad F_\text{fr,k} = \mu N.$$
+<p>The coefficient $\mu$ depends on the materials and the state of the surfaces; $N$ is the normal force of the support.</p>
+<div class="note"><span class="lbl">Important addition</span><p>For static friction there is an inequality $F_\text{fr,s} \le \mu_\text{s}N$, and usually $\mu_\text{s} \gt \mu$. The formula $F = \mu N$ must not be written for a body at rest unless it is on the verge of slipping.</p></div>
 
-<h2 id="s3">3. Направление</h2>
+<h2 id="s3">3. Direction</h2>
 <ul>
-<li>Трение скольжения направлено против скорости тела относительно опоры: $\vec F_\text{тр.ск}\uparrow\downarrow\vec v$.</li>
-<li>Трение покоя направлено против того движения, которое началось бы без него. Например, на брусок, лежащий на наклонной плоскости, оно действует вверх вдоль склона.</li>
+<li>Kinetic friction is directed against the velocity of the body relative to the support: $\vec F_\text{fr,k}\uparrow\downarrow\vec v$.</li>
+<li>Static friction is directed against the motion that would start without it. For example, on a block lying on an incline it acts up the slope.</li>
 </ul>
 §fric_dir§
 
-<h2 id="s4">4. Трение качения</h2>
-<p>Колесу всё время приходится «выбираться» из маленькой ямки, которую оно продавливает.</p>
+<h2 id="s4">4. Rolling friction</h2>
+<p>A wheel keeps having to “climb out” of the small dent it presses into the surface.</p>
 §fric_roll§
-$$F_\text{кач} = k\,\frac{N}{R},$$
-<p>где $R$ — радиус колеса, $k$ — постоянная, зависящая от материалов. Чем больше колесо, тем меньше сопротивление.</p>
+$$F_\text{roll} = k\,\frac{N}{R},$$
+<p>where $R$ is the wheel radius and $k$ a constant depending on the materials. The larger the wheel, the smaller the resistance.</p>
 
-<h2 id="s5">5. Вязкое трение</h2>
-<p>Тело расталкивает среду на своём пути. Сопротивление зависит от скорости <strong>относительно среды</strong>:</p>
-<table><tr><th>Режим</th><th>Зависимость</th></tr>
-<tr><td>малые скорости</td><td>$F \sim v$</td></tr>
-<tr><td>большие скорости</td><td>$F \sim v^2$</td></tr></table>
-<p>Кроме того, сопротивление растёт с площадью поперечного сечения: $F\sim A$.</p>
+<h2 id="s5">5. Viscous friction</h2>
+<p>A body pushes the medium out of its way. The drag depends on the speed <strong>relative to the medium</strong>:</p>
+<table><tr><th>Regime</th><th>Dependence</th></tr>
+<tr><td>low speeds</td><td>$F \sim v$</td></tr>
+<tr><td>high speeds</td><td>$F \sim v^2$</td></tr></table>
+<p>The drag also grows with the cross-sectional area: $F\sim A$.</p>
 §fric_visc§

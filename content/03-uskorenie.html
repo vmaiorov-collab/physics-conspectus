@@ -1,81 +1,82 @@
 <!--
-title: Равноускоренное движение
-sub: Ускорение, вывод формулы координаты через площадь трапеции, формула без времени, торможение с разворотом, правило нечётных чисел и лабораторная с наклонной плоскостью.
-chips: Acceleration; Задачи + лабораторная
-cards: x(t) из графика | Формула без времени | Разворот | Наклонная плоскость
+title: Uniformly accelerated motion
+sub: Acceleration, the position formula from the trapezium area, the time-free formula, braking with a turn-back, the odd-number rule and an inclined-plane lab.
+chips: Acceleration; Problems + lab
+cards: x(t) from a graph | Time-free formula | Turning back | Inclined plane
 -->
-<h2 id="s1">1. Ускорение</h2>
+<h2 id="s1">1. Acceleration</h2>
 $$\vec a = \frac{\Delta\vec v}{\Delta t}, \qquad \Delta t \to 0.$$
-<p>Ускорение отлично от нуля в двух случаях: меняется величина скорости или меняется её направление.</p>
+<p>Acceleration is non-zero in two cases: the magnitude of the velocity changes or its direction changes.</p>
 
-<h2 id="s2">2. Вывод x(t) при постоянном ускорении</h2>
-<p>Движение по прямой: в момент $t=0$ тело находится в точке $x_0$, имеет скорость $v_0$ и ускорение $a$.</p>
+<h2 id="s2">2. Deriving x(t) at constant acceleration</h2>
+<p>Motion along a line: at $t=0$ the body is at $x_0$, has velocity $v_0$ and acceleration $a$.</p>
 §acc_axis§
-<p>При $a_x = \text{const}$ имеем $a_x = \dfrac{v_x - v_{0x}}{t}$, откуда</p>
+<p>For $a_x = \text{const}$ we have $a_x = \dfrac{v_x - v_{0x}}{t}$, hence</p>
 $$v_x(t) = v_{0x} + a_x t.$$
-<p>Перемещение — площадь под графиком скорости, то есть площадь трапеции:</p>
+<p>Displacement is the area under the velocity graph, that is, the area of a trapezium:</p>
 §acc_trap§
 $$\Delta x = \int_0^t v_x\,dt = \frac{v_{0x} + v_x(t)}{2}\,t, \qquad \langle v_x\rangle = \frac{v_{0x}+v_x(t)}{2}.$$
-<p>Подставляем $v_x(t)$:</p>
-<div class="note"><span class="lbl">Важно</span>$$x(t) = x_0 + v_{0x}t + \frac{a_x t^2}{2}$$</div>
-<p>График $x(t)$ — парабола. При $v_{0x}\gt0,\ a_x\gt0$ координата сразу растёт; при $v_{0x}\lt0,\ a_x\gt0$ тело сначала идёт назад, достигает минимума и поворачивает.</p>
+<p>Substituting $v_x(t)$:</p>
+<div class="note"><span class="lbl">Important</span>$$x(t) = x_0 + v_{0x}t + \frac{a_x t^2}{2}$$</div>
+<p>The graph of $x(t)$ is a parabola. For $v_{0x}\gt0,\ a_x\gt0$ the position grows from the start; for $v_{0x}\lt0,\ a_x\gt0$ the body first moves back, reaches a minimum and turns around.</p>
 §acc_cases§
 
-<h2 id="s3">3. Формула без времени</h2>
-<p>Из $v_x = v_{0x} + a_x t$ выражаем $t$ и подставляем в формулу площади:</p>
+<h2 id="s3">3. The time-free formula</h2>
+<p>Express $t$ from $v_x = v_{0x} + a_x t$ and substitute it into the area formula:</p>
 $$\Delta x = \frac{v_x^2 - v_{0x}^2}{2a_x}.$$
-<p>Подробно: $\Delta x = \dfrac{v_{0x}+v_x}{2}\,t$ и $t = \dfrac{v_x - v_{0x}}{a_x}$, а произведение $(v_x+v_{0x})(v_x-v_{0x})$ — разность квадратов. Если вместо начальной скорости известна конечная, то $\Delta x = v_x t - \dfrac{a_x t^2}{2}$.</p>
-<p>Значит, квадрат скорости линейно зависит от перемещения:</p>
+<p>In detail: $\Delta x = \dfrac{v_{0x}+v_x}{2}\,t$ and $t = \dfrac{v_x - v_{0x}}{a_x}$, and the product $(v_x+v_{0x})(v_x-v_{0x})$ is a difference of squares. If the final velocity is known instead of the initial one, $\Delta x = v_x t - \dfrac{a_x t^2}{2}$.</p>
+<p>So the velocity squared depends linearly on displacement:</p>
 §acc_v2§
 
-<h3 id="s3-1">Скорость в середине пути</h3>
-<p>Тело разгоняется от $v_0 = 1$ м/с до $v = 7$ м/с. Какова скорость $v_1$ на середине отрезка?</p>
-<p>Весь путь: $\Delta x = \dfrac{49 - 1}{2a} = \dfrac{24}{a}$. Половина: $\dfrac{\Delta x}{2} = \dfrac{v_1^2 - 1}{2a}$. Делим первое на второе:</p>
-$$2 = \frac{48}{v_1^2 - 1} \;\Rightarrow\; v_1 = 5\ \text{м/с}.$$
-<h3 id="s3-2">Торможение: скорость на половине тормозного пути</h3>
-<p>$S = \dfrac{0 - v_0^2}{-2a}$ и $\dfrac S2 = \dfrac{v_1^2 - v_0^2}{-2a}$. Отношение даёт $2v_1^2 = v_0^2$, то есть $v_0 = v_1\sqrt2$.</p>
-
-<h3 id="s3-3">Тормозной путь 100 м</h3>
-<p>Тормозной путь $S = 100$ м, в его середине скорость $10$ м/с, в конце — ноль. Найти начальную скорость, ускорение и время торможения.</p>
+<h3 id="s3-1">Speed at the middle of the path</h3>
+<p>A body accelerates from $v_0 = 1$ m/s to $v = 7$ m/s. What is the speed $v_1$ at the middle of the segment?</p>
+<p>Whole path: $\Delta x = \dfrac{49 - 1}{2a} = \dfrac{24}{a}$. Half: $\dfrac{\Delta x}{2} = \dfrac{v_1^2 - 1}{2a}$. Dividing the first by the second:</p>
+$$2 = \frac{48}{v_1^2 - 1} \;\Rightarrow\; v_1 = 5\ \text{m/s}.$$
+<h3 id="s3-2">Braking: speed at half of the braking distance</h3>
+<p>$S = \dfrac{0 - v_0^2}{-2a}$ and $\dfrac S2 = \dfrac{v_1^2 - v_0^2}{-2a}$. Their ratio gives $2v_1^2 = v_0^2$, that is, $v_0 = v_1\sqrt2$.</p>
+<h3 id="s3-3">Braking distance of 100 m</h3>
+<p>The braking distance is $S = 100$ m, the speed at its middle is $10$ m/s, at the end it is zero. Find the initial speed, the acceleration and the braking time.</p>
 §acc_brake§
-<p>По предыдущей задаче $v_0 = 10\sqrt2 \approx 14{,}1$ м/с. Далее</p>
-$$a = \frac{v_0^2}{2S} = \frac{200}{200} = 1\ \text{м/с}^2, \qquad t = \frac{2S}{v_0} = \frac{200}{10\sqrt2} \approx 14{,}1\ \text{с}.$$
-<p>(Первая попытка в тетради с $v_0 = 20$ м/с зачёркнута.)</p>
-<h2 id="s4">4. Торможение с разворотом</h2>
-<p>Начальная скорость $v_0$ вдоль оси, ускорение $a$ — против. Найти $d_x(t)$ и путь $S(t)$.</p>
+<p>From the previous problem $v_0 = 10\sqrt2 \approx 14.1$ m/s. Then</p>
+$$a = \frac{v_0^2}{2S} = \frac{200}{200} = 1\ \text{m/s}^2, \qquad t = \frac{2S}{v_0} = \frac{200}{10\sqrt2} \approx 14.1\ \text{s}.$$
+<p>(The first attempt in the notebook, with $v_0 = 20$ m/s, is crossed out.)</p>
+
+<h2 id="s4">4. Braking and turning back</h2>
+<p>The initial velocity $v_0$ is along the axis, the acceleration $a$ against it. Find $d_x(t)$ and the distance $S(t)$.</p>
 $$d_x(t) = v_0 t - \frac{at^2}{2}.$$
-<p>Тело останавливается и поворачивает в вершине параболы: $t_0 = v_0/a$. До этого момента путь совпадает с перемещением, после — продолжает расти:</p>
+<p>The body stops and turns around at the vertex of the parabola: $t_0 = v_0/a$. Until then distance equals displacement; afterwards it keeps growing:</p>
 $$S(t) = \begin{cases} v_0 t - \dfrac{at^2}{2}, & t \le t_0,\\[2mm] \Big(v_0 t_0 - \dfrac{at_0^2}{2}\Big) + \dfrac{a(t-t_0)^2}{2}, & t \gt t_0. \end{cases}$$
 §acc_back§
-<div class="warn"><span class="lbl">Исправление</span><p>В тетради в первой ветви $S(t)$ стоит «+» перед $at^2/2$. Так как тело тормозит, там должен быть «−».</p></div>
+<div class="warn"><span class="lbl">Correction</span><p>In the notebook the first branch of $S(t)$ has “+” before $at^2/2$. Since the body is braking, it must be “−”.</p></div>
 
-<h2 id="s5">5. Пути за равные промежутки времени</h2>
-<p>Старт из покоя, промежутки по $\tau$. Площади под прямой $v = at$ за первый, второй, третий промежутки равны $\frac{a\tau^2}{2}$, $3\cdot\frac{a\tau^2}{2}$, $5\cdot\frac{a\tau^2}{2}$:</p>
+<h2 id="s5">5. Distances in equal time intervals</h2>
+<p>Start from rest, intervals of length $\tau$. The areas under the line $v = at$ for the first, second and third intervals are $\frac{a\tau^2}{2}$, $3\cdot\frac{a\tau^2}{2}$, $5\cdot\frac{a\tau^2}{2}$:</p>
 $$S_1 : S_2 : S_3 : \ldots = 1 : 3 : 5 : \ldots$$
 §acc_odd§
-<p>То же самое для шарика на наклонном жёлобе: отрезки, пройденные за равные времена, относятся как последовательные нечётные числа.</p>
+<p>The same holds for a ball on an inclined chute: the segments covered in equal times are in the ratio of consecutive odd numbers.</p>
 §acc_slope§
 
-<h2 id="s6">6. Разгон в два этапа</h2>
-<p>Сначала ускорение $a_1$ в течение $t_1$, затем $a_2$ в течение $t_2$. После первого этапа скорость $v_1 = a_1 t_1$, она и есть начальная для второго:</p>
+<h2 id="s6">6. Two-stage acceleration</h2>
+<p>First acceleration $a_1$ during $t_1$, then $a_2$ during $t_2$. After the first stage the speed is $v_1 = a_1 t_1$, which is the initial speed of the second:</p>
 §acc_two§
 $$S = \frac{a_1t_1^2}{2} + a_1t_1t_2 + \frac{a_2t_2^2}{2}.$$
 
-<h2 id="s7">7. Лабораторная: скатывание по наклонной плоскости</h2>
-<p>Тело стартует из покоя и проходит длину $L = 125$ см за время $t$. Тогда $L = \dfrac{at^2}{2}$, то есть $a = \dfrac{2L}{t^2}$. Угол задаётся высотой подъёма: $\sin\varphi = h/L$.</p>
+<h2 id="s7">7. Lab: rolling down an inclined plane</h2>
+<p>A body starts from rest and covers a length $L = 125$ cm in time $t$. Then $L = \dfrac{at^2}{2}$, so $a = \dfrac{2L}{t^2}$. The angle is set by the height of the raised end: $\sin\varphi = h/L$.</p>
 §acc_lab§
 <table>
-<tr><th>h, см</th><th>sin φ</th><th>t, с (замеры)</th><th>a, см/с²</th><th>среднее</th></tr>
-<tr><td>60</td><td>0,48</td><td>0,94; 1,00; 1,06; 1,13</td><td>283; 250; 222; 196</td><td>238</td></tr>
-<tr><td>30</td><td>0,24</td><td>1,40; 1,43; 1,37; 1,47; 1,50</td><td>128; 122; 133; 116; 111</td><td>122</td></tr>
-<tr><td>20</td><td>0,16</td><td>1,84; 1,87; 1,97; 2,03; 2,00</td><td>74; 71; 64; 61; 63</td><td>67</td></tr>
-<tr><td>15</td><td>0,12</td><td>2,34; 2,25; 2,37; 2,25; 2,31</td><td>46; 49; 45; 49; 47</td><td>47</td></tr>
-<tr><td>10</td><td>0,08</td><td>2,81; 2,82; 2,91; 2,97; 2,68</td><td>32; 31; 30; 28; 35</td><td>31</td></tr>
+<tr><th>h, cm</th><th>sin φ</th><th>t, s (trials)</th><th>a, cm/s²</th><th>average</th></tr>
+<tr><td>60</td><td>0.48</td><td>0.94; 1.00; 1.06; 1.13</td><td>283; 250; 222; 196</td><td>238</td></tr>
+<tr><td>30</td><td>0.24</td><td>1.40; 1.43; 1.37; 1.47; 1.50</td><td>128; 122; 133; 116; 111</td><td>122</td></tr>
+<tr><td>20</td><td>0.16</td><td>1.84; 1.87; 1.97; 2.03; 2.00</td><td>74; 71; 64; 61; 63</td><td>67</td></tr>
+<tr><td>15</td><td>0.12</td><td>2.34; 2.25; 2.37; 2.25; 2.31</td><td>46; 49; 45; 49; 47</td><td>47</td></tr>
+<tr><td>10</td><td>0.08</td><td>2.81; 2.82; 2.91; 2.97; 2.68</td><td>32; 31; 30; 28; 35</td><td>31</td></tr>
 </table>
-<div class="note"><span class="lbl">Развёрнутое объяснение</span><p>Если нанести средние значения на график, точки ложатся близко к прямой через начало координат: ускорение примерно пропорционально $\sin\varphi$. Разброс отдельных замеров сильнее всего при большом наклоне: время мало, и ошибка секундомера заметнее (а в формулу она входит в квадрате).</p></div>
+<div class="note"><span class="lbl">Detailed explanation</span><p>If the averages are plotted, the points lie close to a straight line through the origin: the acceleration is roughly proportional to $\sin\varphi$. Individual trials scatter most at the steepest slope: the time is short, so the stopwatch error matters more (and the time enters the formula squared).</p></div>
 §acc_incline§
-<h2 id="s8">8. Записи на полях</h2>
-<p>Рядом с задачами есть вычисления без записанного условия:</p>
+
+<h2 id="s8">8. Notes in the margins</h2>
+<p>Next to the problems there are calculations without a written statement:</p>
 $$\Delta s = \Delta v\cdot t + \Delta t\cdot v, \qquad v = \frac{\Delta v}{\Delta t}\,t + v_0.$$
-<p>Скорость меняется на $15$ м/с за $6$ минут: $a = \dfrac{15}{360} = \dfrac1{24}$ м/с². Тогда через $60$ с $v = \dfrac1{24}\cdot 60 + 2{,}5 = 5$ м/с, и отдельно записано $5 - 15 = -10$ м/с.</p>
-<p>Ещё начата задача про поезд и мост (даны $30$ с и $60$ с) — решение не доведено до конца.</p>
+<p>The speed changes by $15$ m/s in $6$ minutes: $a = \dfrac{15}{360} = \dfrac1{24}$ m/s². Then after $60$ s $v = \dfrac1{24}\cdot 60 + 2.5 = 5$ m/s, and separately $5 - 15 = -10$ m/s is written.</p>
+<p>A problem about a train and a bridge is also started (with $30$ s and $60$ s given); the solution is not finished.</p>

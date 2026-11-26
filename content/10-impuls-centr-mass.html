@@ -1,38 +1,38 @@
 <!--
-title: Импульс и центр масс
-sub: Как описать движение неточечного тела: система частиц, внутренние и внешние силы, центр масс и закон сохранения импульса.
+title: Momentum and centre of mass
+sub: How to describe the motion of an extended body: a system of particles, internal and external forces, centre of mass and conservation of momentum.
 chips: Momentum; Center of mass
-cards: Система частиц | Внутренние силы | Центр масс | Сохранение импульса
+cards: System of particles | Internal forces | Centre of mass | Conservation of momentum
 -->
-<h2 id="s1">1. Проблема</h2>
-<p>Второй закон $\sum\vec F = m\vec a$ верен для <strong>материальной точки</strong> в инерциальной системе отсчёта. Уравнений для движения протяжённого тела у нас пока нет.</p>
-<p><strong>Решение:</strong> разделить систему на $N \gg 1$ маленьких частей и записать второй закон для каждой.</p>
+<h2 id="s1">1. The problem</h2>
+<p>The second law $\sum\vec F = m\vec a$ holds for a <strong>point mass</strong> in an inertial reference frame. We do not yet have equations for the motion of an extended body.</p>
+<p><strong>Solution:</strong> divide the system into $N \gg 1$ small parts and write the second law for each.</p>
 
-<h2 id="s2">2. Внутренние и внешние силы</h2>
+<h2 id="s2">2. Internal and external forces</h2>
 <ul>
-<li><strong>Внутренние</strong> силы — взаимодействия тел внутри системы.</li>
-<li><strong>Внешние</strong> — взаимодействия тел системы с телами вне неё.</li>
+<li><strong>Internal</strong> forces: interactions between bodies inside the system.</li>
+<li><strong>External</strong> forces: interactions of bodies of the system with bodies outside it.</li>
 </ul>
 §mom_system§
-$$\begin{aligned} m_1\vec a_1 &= \sum_{i\ne1}\vec F_{1i} + \vec F_1^{\,\text{внеш}}\\ m_2\vec a_2 &= \sum_{i\ne2}\vec F_{2i} + \vec F_2^{\,\text{внеш}}\\ &\;\;\vdots\\ m_N\vec a_N &= \sum_{i\ne N}\vec F_{Ni} + \vec F_N^{\,\text{внеш}} \end{aligned}$$
-<p>Складываем все уравнения. По третьему закону $\vec F_{ij} = -\vec F_{ji}$, поэтому все внутренние силы попарно сокращаются:</p>
-<div class="note"><span class="lbl">Итог</span>$$\sum_{i=1}^N m_i\vec a_i = \sum_{i=1}^N \vec F_i^{\,\text{внеш}}$$</div>
+$$\begin{aligned} m_1\vec a_1 &= \sum_{i\ne1}\vec F_{1i} + \vec F_1^{\,\text{ext}}\\ m_2\vec a_2 &= \sum_{i\ne2}\vec F_{2i} + \vec F_2^{\,\text{ext}}\\ &\;\;\vdots\\ m_N\vec a_N &= \sum_{i\ne N}\vec F_{Ni} + \vec F_N^{\,\text{ext}} \end{aligned}$$
+<p>Add all the equations. By the third law $\vec F_{ij} = -\vec F_{ji}$, so all internal forces cancel in pairs:</p>
+<div class="note"><span class="lbl">Result</span>$$\sum_{i=1}^N m_i\vec a_i = \sum_{i=1}^N \vec F_i^{\,\text{ext}}$$</div>
 
-<h2 id="s3">3. Центр масс (тяжести)</h2>
-<p>Где подпереть лёгкий стержень с грузами, чтобы он не поворачивался? Момент всей тяжести, приложенной в точке $x_C$, должен равняться сумме моментов отдельных грузов:</p>
+<h2 id="s3">3. Centre of mass (gravity)</h2>
+<p>Where should a light rod with loads be supported so that it does not turn? The moment of the total weight applied at $x_C$ must equal the sum of the moments of the separate loads:</p>
 $$m_1gx_1 + m_2gx_2 + \ldots + m_Ngx_N = (m_1+\ldots+m_N)\,g\,x_C.$$
 §mom_center§
 $$x_C = \frac{\sum m_ix_i}{\sum m_i} = \frac{\sum m_i x_i}{M}.$$
-<p>Для двух одинаковых масс центр — посередине между ними. Для нескольких тел можно сначала заменить пару одной точкой с суммарной массой, а потом добавить следующую.</p>
-<p>Три одинаковые массы в вершинах треугольника: две заменяем одной массой $2m$ в середине стороны; центр масс делит отрезок от этой точки до третьей массы в отношении $1:2$.</p>
+<p>For two equal masses the centre is midway between them. For several bodies one can first replace a pair by a single point with the total mass and then add the next one.</p>
+<p>Three equal masses at the vertices of a triangle: replace two by a single mass $2m$ at the middle of a side; the centre of mass divides the segment from that point to the third mass in the ratio $1:2$.</p>
 §mom_triangle§
 
-<h2 id="s4">4. Сохранение импульса</h2>
-<div class="note"><span class="lbl">Важное дополнение</span><p>В записях объявлена тема «Закон сохранения импульса», а вывод останавливается на сумме $m_i\vec a_i$. Завершение:</p></div>
-<p>Импульс системы $\vec p = \sum m_i\vec v_i$. Так как $\vec a_i = d\vec v_i/dt$,</p>
-$$\frac{d\vec p}{dt} = \sum\vec F^{\,\text{внеш}}.$$
-<p>Если внешних сил нет или их сумма равна нулю, то $\vec p = \text{const}$ — <strong>закон сохранения импульса</strong>. Он объясняет опыт с тележками: из покоя $m_1v_1 = m_2v_2$.</p>
+<h2 id="s4">4. Conservation of momentum</h2>
+<div class="note"><span class="lbl">Important addition</span><p>The notes announce the topic “Conservation of momentum”, but the derivation stops at the sum $m_i\vec a_i$. Here is the rest:</p></div>
+<p>The momentum of the system is $\vec p = \sum m_i\vec v_i$. Since $\vec a_i = d\vec v_i/dt$,</p>
+$$\frac{d\vec p}{dt} = \sum\vec F^{\,\text{ext}}.$$
+<p>If there are no external forces or their sum is zero, then $\vec p = \text{const}$: <strong>conservation of momentum</strong>. It explains the experiment with the carts: starting from rest, $m_1v_1 = m_2v_2$.</p>
 §mom_carts§
-<p>Дифференцируя дважды определение центра масс, получаем</p>
-$$M\vec a_C = \sum\vec F^{\,\text{внеш}}:$$
-<p>центр масс движется как точка массой $M$, к которой приложены все внешние силы.</p>
+<p>Differentiating the definition of the centre of mass twice, we get</p>
+$$M\vec a_C = \sum\vec F^{\,\text{ext}}:$$
+<p>the centre of mass moves like a point of mass $M$ with all the external forces applied to it.</p>

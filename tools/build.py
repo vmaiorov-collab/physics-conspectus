@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from figures import F  # noqa: E402
 import figures2  # noqa: E402,F401
 
-SITE = "Конспекты по физике"
+SITE = "Physics notes"
 HEAD = (ROOT / "template/head.html").read_text()
 TAIL = (ROOT / "template/tail.html").read_text()
 
@@ -57,13 +57,13 @@ def lesson(i, L, lessons, used):
     pager = ""
     if i > 0:
         p = lessons[i - 1]
-        pager += f'<a class="prev" href="{p["file"]}"><small>← тема {i}</small><b>{p["title"]}</b></a>'
+        pager += f'<a class="prev" href="{p["file"]}"><small>← topic {i}</small><b>{p["title"]}</b></a>'
     if i + 1 < len(lessons):
         n = lessons[i + 1]
-        pager += f'<a class="next" href="{n["file"]}"><small>тема {i+2} →</small><b>{n["title"]}</b></a>'
+        pager += f'<a class="next" href="{n["file"]}"><small>topic {i+2} →</small><b>{n["title"]}</b></a>'
     title = f'{i+1}. {L["title"]}'
     return f"""<!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +75,7 @@ def lesson(i, L, lessons, used):
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="sitelink" href="../index.html">← Все темы</a><a class="back dl" href="{L["file"]}" download="{L["file"]}" title="Скачать конспект одним HTML-файлом, откроется без интернета">⬇ Скачать конспект</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">тёмная тема</button></div>
+<div class="top"><a class="sitelink" href="../index.html">← All topics</a><a class="back dl" href="{L["file"]}" download="{L["file"]}" title="Download these notes as a single HTML file that opens offline">⬇ Download notes</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div>
 
 <header class="hero">
   <h1>{title}</h1>
@@ -84,17 +84,17 @@ def lesson(i, L, lessons, used):
 </header>
 
 <nav class="toc">
-  <h2>Содержание</h2>
+  <h2>Contents</h2>
   <ol>{toc}</ol>
 </nav>
 {body}
 
 <footer>
-  Конспект составлен по рукописным записям занятий. Чертежи перерисованы; дополнения и исправления отмечены в тексте.
+  These notes are based on handwritten class notes. Drawings are redrawn; additions and corrections are marked in the text.
 </footer>
-<nav class="pager" aria-label="Соседние темы">{pager}</nav>
+<nav class="pager" aria-label="Adjacent topics">{pager}</nav>
 </div>
-<button class="toplink" id="topBtn">↑ наверх</button>
+<button class="toplink" id="topBtn">↑ top</button>
 {TAIL}
 </body>
 </html>
@@ -109,15 +109,15 @@ def index(lessons):
         key = plain(" ".join([L["title"], L["sub"], L["chips"], L["cards"], " ".join(re.findall(r"<h[23][^>]*>(.*?)</h[23]>", L["body"]))])).lower()
         cards.append(f'<a class="pcard" href="notes/{L["file"]}" data-k="{html.escape(key, quote=True)}"><div class="ph">'
                      f'<span class="badge" style="background:var({colors[i % 5]})">{i+1}</span><h3>{L["title"]}</h3></div>'
-                     f'<ul class="tl">{items}</ul><div class="pf"><span>чертежей: {L["body"].count("§") // 2}</span><em>→</em></div></a>')
+                     f'<ul class="tl">{items}</ul><div class="pf"><span>drawings: {L["body"].count("§") // 2}</span><em>→</em></div></a>')
     drawings = sum(L["body"].count("§") // 2 for L in lessons)
     return f"""<!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{SITE} — механика</title>
-<meta name="description" content="Конспекты по механике с формулами, чертежами и разбором задач: векторы, кинематика, законы Ньютона, блоки, закон Гука, трение, статика, импульс.">
+<title>{SITE}: mechanics</title>
+<meta name="description" content="Mechanics notes with formulas, drawings and solved problems: vectors, kinematics, Newton's laws, pulleys, Hooke's law, friction, statics, momentum.">
 <link rel="icon" type="image/png" href="favicon.png">
 <script>(function(){{try{{var t=localStorage.getItem("conspectusTheme");document.documentElement.setAttribute("data-theme",t||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"))}}catch(e){{document.documentElement.setAttribute("data-theme","light")}}}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,34 +128,34 @@ def index(lessons):
 </head>
 <body>
 <div class="page">
-<header class="nav"><div style="display:flex;align-items:center;gap:4px"><a class="brand" href="index.html">физика<i>.</i></a><nav class="links"><a href="#pick">Темы</a><a href="https://vmaiorov-collab.github.io/conspectus/">Конспекты по программированию</a></nav></div><div class="navr"><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">тёмная тема</button></div></header>
+<header class="nav"><div style="display:flex;align-items:center;gap:4px"><a class="brand" href="index.html">physics<i>.</i></a><nav class="links"><a href="#pick">Topics</a><a href="https://vmaiorov-collab.github.io/conspectus/">Programming notes</a></nav></div><div class="navr"><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div></header>
 
 <section class="hero2">
   <div class="hl">
     <div class="hmain">
-      <span class="chip">Механика</span>
-      <h1>Конспекты по <span class="hi">физике</span></h1>
-      <p>Определения, выводы формул, чертежи и разобранные задачи. Все рисунки нарисованы заново в SVG.</p>
-      <div class="cta"><a class="btn1" href="#pick">Выбрать тему</a></div>
-      <div class="sbox"><div class="search"><input id="q" type="search" placeholder="Поиск по темам: блоки, момент, пружина…" autocomplete="off" aria-label="Поиск по темам"></div></div>
+      <span class="chip">Mechanics</span>
+      <h1><span class="hi">Physics</span> notes</h1>
+      <p>Definitions, derivations, drawings and solved problems. Every picture is redrawn in SVG.</p>
+      <div class="cta"><a class="btn1" href="#pick">Choose a topic</a></div>
+      <div class="sbox"><div class="search"><input id="q" type="search" placeholder="Search topics: pulleys, moment, spring…" autocomplete="off" aria-label="Search topics"></div></div>
     </div>
-    <div class="hstats"><div><b>{len(lessons)}</b><span>тем</span></div><div><b>{drawings}</b><span>чертежей к темам и задачам</span></div><div><b>1</b><span>файл на тему — читается офлайн</span></div></div>
+    <div class="hstats"><div><b>{len(lessons)}</b><span>topics</span></div><div><b>{drawings}</b><span>drawings for topics and problems</span></div><div><b>1</b><span>file per topic, readable offline</span></div></div>
   </div>
 </section>
 
-<div class="nores" id="nores" hidden>Ничего не найдено.</div>
+<div class="nores" id="nores" hidden>Nothing found.</div>
 <div id="pick">
-<h2 class="big">Темы</h2>
+<h2 class="big">Topics</h2>
 <nav class="pgrid">{"".join(cards)}</nav>
 </div>
-<footer class="foot"><a href="https://github.com/vmaiorov-collab/physics-conspectus">исходники на GitHub</a></footer>
+<footer class="foot"><a href="https://github.com/vmaiorov-collab/physics-conspectus">source on GitHub</a></footer>
 </div>
 <script>
 (function(){{var q=document.getElementById("q"),cards=[].slice.call(document.querySelectorAll(".pcard")),no=document.getElementById("nores");
 q.addEventListener("input",function(){{var words=q.value.toLowerCase().split(/\\s+/).filter(Boolean),n=0;
 cards.forEach(function(c){{var ok=words.every(function(w){{return c.dataset.k.indexOf(w)>=0}});c.hidden=!ok;if(ok)n++}});no.hidden=n>0}});}})();
 (function(){{var root=document.documentElement,btn=document.getElementById("theme-toggle");
-function label(){{btn.textContent=root.getAttribute("data-theme")==="dark"?"светлая тема":"тёмная тема"}}label();
+function label(){{btn.textContent=root.getAttribute("data-theme")==="dark"?"light theme":"dark theme"}}label();
 btn.addEventListener("click",function(){{var next=root.getAttribute("data-theme")==="dark"?"light":"dark";root.setAttribute("data-theme",next);label();try{{localStorage.setItem("conspectusTheme",next)}}catch(e){{}}}});}})();
 </script>
 </body>
@@ -170,9 +170,9 @@ def main():
     for i, L in enumerate(lessons):
         out = lesson(i, L, lessons, used)
         (ROOT / "notes" / L["file"]).write_text(out)
-        print(f'{L["file"]}: {len(out)//1024} КБ')
+        print(f'{L["file"]}: {len(out)//1024} KB')
     (ROOT / "index.html").write_text(index(lessons))
-    print("фигуры без места:", sorted(set(F) - used))
+    print("unused figures:", sorted(set(F) - used))
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@
   var root = document.documentElement;
   var btn = document.getElementById("theme-toggle");
   if(!btn) return;
-  function apply(t){ root.setAttribute("data-theme", t); btn.textContent = t === "dark" ? "светлая тема" : "тёмная тема"; }
+  function apply(t){ root.setAttribute("data-theme", t); btn.textContent = t === "dark" ? "light theme" : "dark theme"; }
   var saved = (function(){ try { return localStorage.getItem("conspectusTheme"); } catch(e){ return null; } })();
   apply(saved || root.getAttribute("data-theme") || "light");
   btn.addEventListener("click", function(){
@@ -25,7 +25,7 @@
   });
 })();
 </script>
-<script>(function(){var b=document.getElementById("look-toggle");if(!b)return;var h=document.documentElement;function label(){b.textContent=h.getAttribute("data-look")==="book"?"↩ старый вид":"↪ новый вид"}label();b.addEventListener("click",function(){var next=h.getAttribute("data-look")==="book"?"paper":"book";h.setAttribute("data-look",next);try{localStorage.setItem("conspectusLook",next)}catch(e){}label()});})();</script>
+<script>(function(){var b=document.getElementById("look-toggle");if(!b)return;var h=document.documentElement;function label(){b.textContent=h.getAttribute("data-look")==="book"?"↩ old look":"↪ new look"}label();b.addEventListener("click",function(){var next=h.getAttribute("data-look")==="book"?"paper":"book";h.setAttribute("data-look",next);try{localStorage.setItem("conspectusLook",next)}catch(e){}label()});})();</script>
 <script id="reader">
 (function(){
   var heads = [].slice.call(document.querySelectorAll(".wrap h2[id]"));
@@ -34,11 +34,11 @@
   function label(h){ var c = h.cloneNode(true); [].forEach.call(c.querySelectorAll(".ts"), function(x){ x.remove(); });
     return c.textContent.replace(/^\s*(?:\d+\.)+\s*/, "").trim(); }
   function links(box){ return heads.map(function(h){ var a = document.createElement("a"); a.href = "#" + h.id; a.textContent = label(h); box.appendChild(a); return a; }); }
-  var side = document.createElement("nav"); side.className = "side-toc"; side.setAttribute("aria-label", "Разделы");
-  side.innerHTML = "<p>Разделы</p>"; var sideLinks = links(side); document.body.appendChild(side);
-  var btn = document.createElement("button"); btn.className = "secbtn"; btn.type = "button"; btn.textContent = "≡ разделы";
+  var side = document.createElement("nav"); side.className = "side-toc"; side.setAttribute("aria-label", "Sections");
+  side.innerHTML = "<p>Sections</p>"; var sideLinks = links(side); document.body.appendChild(side);
+  var btn = document.createElement("button"); btn.className = "secbtn"; btn.type = "button"; btn.textContent = "≡ sections";
   btn.setAttribute("aria-expanded", "false");
-  var panel = document.createElement("nav"); panel.className = "secpanel"; panel.hidden = true; panel.setAttribute("aria-label", "Разделы");
+  var panel = document.createElement("nav"); panel.className = "secpanel"; panel.hidden = true; panel.setAttribute("aria-label", "Sections");
   var panelLinks = links(panel); document.body.appendChild(panel); document.body.appendChild(btn);
   function toggle(open){ panel.hidden = !open; btn.setAttribute("aria-expanded", open); }
   btn.addEventListener("click", function(e){ e.stopPropagation(); toggle(panel.hidden); });

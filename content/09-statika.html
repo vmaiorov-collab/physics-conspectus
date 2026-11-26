@@ -1,70 +1,70 @@
 <!--
-title: Статика: моменты сил
-sub: Условия равновесия, момент силы, выбор оси, равнодействующая и разбор задач про рычаги, доски и блоки.
-chips: Rotational statics; Теория + 9 задач
-cards: Момент силы | Два условия | Рычаги | Опрокидывание
+title: Statics: moments of forces
+sub: Equilibrium conditions, the moment of a force, choosing the axis, the resultant and solved problems on levers, boards and pulleys.
+chips: Rotational statics; Theory + 9 problems
+cards: Moment of a force | Two conditions | Levers | Tipping
 -->
-<h2 id="s1">1. Почему мало равенства сил</h2>
-<p>$\sum\vec F = 0$ ещё не означает равновесия: пара равных противоположных сил, приложенных в разных точках, раскручивает тело. Первое условие запрещает только поступательное движение.</p>
+<h2 id="s1">1. Why balancing forces is not enough</h2>
+<p>$\sum\vec F = 0$ does not yet mean equilibrium: a pair of equal opposite forces applied at different points spins a body. The first condition forbids only translational motion.</p>
 §st_couple§
 
-<h2 id="s2">2. Момент силы</h2>
+<h2 id="s2">2. Moment of a force</h2>
 §mom_arm§
-$$M = F\,r\sin\alpha = F\,d, \qquad [M] = \text{Н}\cdot\text{м},$$
-<p>где $d$ — <strong>плечо</strong>: расстояние от оси до линии действия силы.</p>
-<div class="note"><span class="lbl">Два условия равновесия</span>$$\sum\vec F = 0 \qquad\text{и}\qquad \sum M_{\circlearrowleft} = \sum M_{\circlearrowright}$$<p>Первое «убивает» поступательное движение, второе — вращательное.</p></div>
+$$M = F\,r\sin\alpha = F\,d, \qquad [M] = \text{N}\cdot\text{m},$$
+<p>where $d$ is the <strong>moment arm</strong>: the distance from the axis to the line of action of the force.</p>
+<div class="note"><span class="lbl">Two equilibrium conditions</span>$$\sum\vec F = 0 \qquad\text{and}\qquad \sum M_{\circlearrowleft} = \sum M_{\circlearrowright}$$<p>The first “kills” translational motion, the second rotational motion.</p></div>
 §st_rotation§
-<p><strong>Совет:</strong> ось выбирают в точке приложения неизвестной силы, тогда она выпадает из уравнения.</p>
+<p><strong>Tip:</strong> choose the axis at the point where an unknown force acts; it then drops out of the equation.</p>
 
-<h2 id="s3">3. Стержень на двух нитях</h2>
-<p>Силы на чертеже проводят из точек их приложения: натяжения — из мест крепления нитей, тяжесть — из середины однородного стержня.</p>
+<h2 id="s3">3. A rod on two strings</h2>
+<p>Draw forces from their points of application: tensions from where the strings are attached, gravity from the middle of a uniform rod.</p>
 §st_strings§
-<p>Однородный стержень массы $m$ и длины $L$ подвешен горизонтально на нитях: одна у левого конца ($t_1$), другая на расстоянии $l$ от него ($t_2$). Тяжесть приложена в середине. Моменты относительно левого крепления и равенство сил:</p>
+<p>A uniform rod of mass $m$ and length $L$ hangs horizontally on strings: one at the left end ($t_1$), the other at distance $l$ from it ($t_2$). Gravity acts at the middle. Moments about the left attachment and the force balance:</p>
 $$t_2\,l = mg\,\frac L2, \qquad t_1 + t_2 = mg \;\Rightarrow\; t_2 = \frac{mgL}{2l},\quad t_1 = mg - \frac{mgL}{2l}.$$
-<p>При $l = L$ получаем $t_1 = t_2 = mg/2$.</p>
+<p>For $l = L$ we get $t_1 = t_2 = mg/2$.</p>
 
-<h2 id="s4">4. Равнодействующая</h2>
-<p>Школьное определение: $\vec R = \sum\vec F$. В курсе добавляется второе требование: равнодействующая приложена в точке, относительно которой $\sum M = 0$. Для пары сил $\sum\vec F = 0$, но заменить её «нулевой силой» нельзя — равнодействующей у пары нет.</p>
+<h2 id="s4">4. The resultant</h2>
+<p>The school definition: $\vec R = \sum\vec F$. This course adds a second requirement: the resultant is applied at the point about which $\sum M = 0$. For a couple $\sum\vec F = 0$, but it cannot be replaced by a “zero force”: a couple has no resultant.</p>
 §st_resultant§
-<div class="note"><span class="lbl">Развёрнутое объяснение</span><p>Для доски с грузом: точка приложения равнодействующей делит расстояние между силами $mg$ и $Mg$ так, что $mg\,l_1 = Mg\,l_2$; там же достаточно поставить одну опору. В тетради этот чертёж не закончен.</p></div>
+<div class="note"><span class="lbl">Detailed explanation</span><p>For a board with a load: the point of application of the resultant divides the distance between the forces $mg$ and $Mg$ so that $mg\,l_1 = Mg\,l_2$; a single support placed there is enough. This drawing is unfinished in the notebook.</p></div>
 
-<h2 id="s5">5. Задачи</h2>
-<h3 id="s5-1">1. Ящик у стены на блоках</h3>
-<p>Чтобы сдвинуть ящик, нужно преодолеть трение 16 Н. За верёвку тянут с силой 15 Н. Какую минимальную силу приложить к ящику, чтобы он оставался на месте?</p>
+<h2 id="s5">5. Problems</h2>
+<h3 id="s5-1">1. A box by a wall on pulleys</h3>
+<p>To move the box, a friction force of 16 N must be overcome. The rope is pulled with 15 N. What minimum force must be applied to the box to keep it in place?</p>
 §st_box§
-<p>Блоки передают ящику $2F + F = 45$ Н в сторону стены. Трение помогает на 16 Н, остальное добираем руками: $f = 45 - 16 = 29$ Н.</p>
-<h3 id="s5-2">2. Минимальное трение под бруском</h3>
+<p>The pulleys transmit $2F + F = 45$ N to the box towards the wall. Friction helps with 16 N, and we supply the rest by hand: $f = 45 - 16 = 29$ N.</p>
+<h3 id="s5-2">2. Minimum friction under a block</h3>
 §st_friction_pulley§
-<p>На подвижный блок вниз действуют его тяжесть $mg/2$ и две ветви нижней нити по $mg$. Значит верхняя нить натянута с силой</p>
-$$F_\text{тр} = T = mg + mg + \frac{mg}{2} = \frac52 mg.$$
-<h3 id="s5-3">3. Где поставить опору рычага</h3>
-<p>$L = 60$ см, $m_1 = 2$ кг (через подвижный блок), $m_2 = 3$ кг.</p>
+<p>The movable pulley is pulled down by its weight $mg/2$ and two branches of the lower string, $mg$ each. So the tension in the upper string is</p>
+$$F_\text{fr} = T = mg + mg + \frac{mg}{2} = \frac52 mg.$$
+<h3 id="s5-3">3. Where to put the pivot of a lever</h3>
+<p>$L = 60$ cm, $m_1 = 2$ kg (through a movable pulley), $m_2 = 3$ kg.</p>
 §st_lever§
-<p>На левый конец действует $m_1g/2$, на правый $m_2g$:</p>
-$$\frac{m_1g}{2}\,l = m_2g\,(L-l) \;\Rightarrow\; 10\,l = 30\,(60-l) \;\Rightarrow\; l = 45\ \text{см}.$$
-<h3 id="s5-4">4. Стержень с грузом в четверти длины</h3>
+<p>The left end feels $m_1g/2$, the right one $m_2g$:</p>
+$$\frac{m_1g}{2}\,l = m_2g\,(L-l) \;\Rightarrow\; 10\,l = 30\,(60-l) \;\Rightarrow\; l = 45\ \text{cm}.$$
+<h3 id="s5-4">4. A rod with a load at a quarter of its length</h3>
 §st_rod§
-<p>Моменты относительно $B$, затем относительно $A$:</p>
+<p>Moments about $B$, then about $A$:</p>
 $$T_A = \frac34 mg + \frac{Mg}{2}, \qquad T_B = \frac14 mg + \frac{Mg}{2}.$$
-<h3 id="s5-5">5. Рычаг из семи делений</h3>
+<h3 id="s5-5">5. A lever of seven divisions</h3>
 §st_seven§
-<p>Центр тяжести отстоит от опоры на половину деления, нить от подвижного блока — на два:</p>
+<p>The centre of gravity is half a division from the pivot, the string from the movable pulley two divisions:</p>
 $$Mg\cdot\frac{\ell}{2} = \frac{mg}{2}\cdot 2\ell \;\Rightarrow\; m = \frac M2.$$
-<h3 id="s5-6">6. Лёгкий стержень с грузами на концах</h3>
-<p>Длина $3a$, нить прикреплена на расстоянии $a$ от левого конца и через блок соединена с грузом $M = 3$ кг.</p>
+<h3 id="s5-6">6. A light rod with loads at its ends</h3>
+<p>The length is $3a$; a string is attached at distance $a$ from the left end and connected over a pulley to a load $M = 3$ kg.</p>
 §st_two_masses§
-<p>Ось в $O_1$: $m_1g\,a = m_2g\,2a$, то есть $m_1 = 2m_2$. Ось у правого конца: $m_1g\,3a = Mg\,2a$. Итого $m_1 = 2$ кг, $m_2 = 1$ кг.</p>
-<h3 id="s5-7">7 и 8. Доска на столе и балка на платформе</h3>
+<p>Axis at $O_1$: $m_1g\,a = m_2g\,2a$, so $m_1 = 2m_2$. Axis at the right end: $m_1g\,3a = Mg\,2a$. Hence $m_1 = 2$ kg, $m_2 = 1$ kg.</p>
+<h3 id="s5-7">7 and 8. A board on a table and a beam on a platform</h3>
 §st_table§
-<p><strong>7.</strong> Доска массы 5 кг свисает на треть длины. Тянем свисающий конец вниз, ось — ребро стола. Плечо силы $L/3$, плечо тяжести $L/2 - L/3 = L/6$:</p>
-$$F\,\frac L3 = mg\,\frac L6 \;\Rightarrow\; F = \frac{mg}{2} = 25\ \text{Н}.$$
-<p><strong>Другой способ</strong> — разделить доску по ребру стола на части с весом $\tfrac23mg$ и $\tfrac13mg$:</p>
+<p><strong>7.</strong> A 5 kg board overhangs by a third of its length. We pull the overhanging end down; the axis is the table edge. The arm of the force is $L/3$, the arm of gravity $L/2 - L/3 = L/6$:</p>
+$$F\,\frac L3 = mg\,\frac L6 \;\Rightarrow\; F = \frac{mg}{2} = 25\ \text{N}.$$
+<p><strong>Another way</strong> is to split the board at the table edge into parts weighing $\tfrac23mg$ and $\tfrac13mg$:</p>
 §st_board_split§
 $$\frac{2mg}{3}\cdot\frac L3 = \frac{mg}{3}\cdot\frac L6 + F\,\frac L3 \;\Rightarrow\; F = \frac{mg}{2}.$$
-<p><strong>8.</strong> Балка свисает на 0,2 длины; сила $F = 300$ Н вверх в свисающем конце $B$ отрывает её от платформы. Ось — дальний конец $O$:</p>
-$$F\,L = mg\,\frac L2 \;\Rightarrow\; mg = 600\ \text{Н},\quad m = 60\ \text{кг}.$$
-<h3 id="s5-8">9. Когда доска оторвётся от опоры</h3>
+<p><strong>8.</strong> A beam overhangs by 0.2 of its length; an upward force $F = 300$ N at the overhanging end $B$ lifts it off the platform. The axis is the far end $O$:</p>
+$$F\,L = mg\,\frac L2 \;\Rightarrow\; mg = 600\ \text{N},\quad m = 60\ \text{kg}.$$
+<h3 id="s5-8">9. When the board leaves its support</h3>
 §st_sand§
-<p>Масса доски $M = 20$ кг, опоры — на расстоянии $L/3$ от левого конца и у правого конца; масса груза слева растёт со скоростью $\mu = 0{,}5$ кг/с. В момент отрыва реакция правой опоры равна нулю. Ось $O$:</p>
-$$m g\,\frac L3 = Mg\,\frac L6 \;\Rightarrow\; m = \frac M2 = 10\ \text{кг},\qquad t = \frac{M}{2\mu} = 20\ \text{с}.$$
-<div class="note"><span class="lbl">Пояснение</span><p>Условие этой задачи в тетради не записано: оно восстановлено по чертежу, вычислениям и листу ответов. В самой тетради тот же результат получен делением доски на части $Mg/3$ и $2Mg/3$.</p></div>
+<p>The board mass is $M = 20$ kg, the supports are at $L/3$ from the left end and at the right end; the mass of the load on the left grows at $\mu = 0.5$ kg/s. At the moment of lift-off the reaction of the right support is zero. Axis $O$:</p>
+$$m g\,\frac L3 = Mg\,\frac L6 \;\Rightarrow\; m = \frac M2 = 10\ \text{kg},\qquad t = \frac{M}{2\mu} = 20\ \text{s}.$$
+<div class="note"><span class="lbl">Note</span><p>The statement of this problem is not written in the notebook: it is reconstructed from the drawing, the calculations and the answer sheet. In the notebook itself the same result is obtained by splitting the board into parts $Mg/3$ and $2Mg/3$.</p></div>

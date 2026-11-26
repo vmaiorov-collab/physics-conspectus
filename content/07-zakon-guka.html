@@ -1,78 +1,78 @@
 <!--
-title: Деформации и закон Гука
-sub: Виды деформаций, реакция опоры, жёсткость, диаграмма растяжения, соединения пружин, пружина под собственным весом и модуль Юнга.
-chips: Hooke's law; Теория + эксперимент
-cards: Диаграмма растяжения | Соединения пружин | Тяжёлая пружина | Модуль Юнга
+title: Deformations and Hooke's law
+sub: Kinds of deformation, the normal force, stiffness, the stress–strain diagram, spring combinations, a spring under its own weight and Young's modulus.
+chips: Hooke's law; Theory + experiment
+cards: Stress–strain diagram | Spring combinations | Heavy spring | Young's modulus
 -->
-<h2 id="s1">1. Деформации и реакция опоры</h2>
-<p>Виды деформации: растяжение / сжатие, изгиб, кручение, сдвиг. Тело стремится сохранить форму — отсюда силы упругости.</p>
+<h2 id="s1">1. Deformations and the normal force</h2>
+<p>Kinds of deformation: tension / compression, bending, torsion, shear. A body tends to keep its shape, and this is where elastic forces come from.</p>
 §hooke_types§
-<p><strong>Нормальная реакция</strong> $\vec N$ — сила упругости опоры, направленная перпендикулярно поверхности (и на горизонтальном столе, и на изогнутой поверхности).</p>
+<p>The <strong>normal force</strong> $\vec N$ is the elastic force of a support, perpendicular to the surface (both on a horizontal table and on a curved surface).</p>
 §hooke_normal§
 
-<h2 id="s2">2. Закон Гука</h2>
-$$F \sim \Delta l, \qquad F = k\,\Delta l, \qquad k = \frac{F}{\Delta l}\ \ [\text{Н/м}].$$
-<p>$k$ — <strong>жёсткость</strong> (spring constant).</p>
+<h2 id="s2">2. Hooke's law</h2>
+$$F \sim \Delta l, \qquad F = k\,\Delta l, \qquad k = \frac{F}{\Delta l}\ \ [\text{N/m}].$$
+<p>$k$ is the <strong>spring constant</strong> (stiffness).</p>
 <ul>
-<li><strong>Упругая деформация</strong>: после снятия силы тело возвращает исходную форму.</li>
-<li><strong>Пластическая (неупругая)</strong>: после снятия силы форма не восстанавливается.</li>
+<li><strong>Elastic deformation</strong>: after the force is removed the body returns to its original shape.</li>
+<li><strong>Plastic (inelastic)</strong>: after the force is removed the shape is not restored.</li>
 </ul>
-<div class="warn"><span class="lbl">Исправление</span><p>В тетради определения подписаны наоборот: свойство «возвращается в исходную форму» относится к упругой деформации.</p></div>
+<div class="warn"><span class="lbl">Correction</span><p>In the notebook the definitions are labelled the other way round: “returns to its original shape” describes elastic deformation.</p></div>
 §hooke_graph§
-<p>До предела пропорциональности график — прямая, и закон Гука выполняется. Далее по порядку: предел упругости, текучесть, предел прочности, разрыв.</p>
+<p>Up to the limit of proportionality the graph is a straight line and Hooke's law holds. Then, in order: the elastic limit, yielding, ultimate strength, fracture.</p>
 
-<h2 id="s3">3. Соединения пружин</h2>
+<h2 id="s3">3. Spring combinations</h2>
 §hooke_connect§
-<p><strong>Последовательно</strong> сила в пружинах общая, удлинения складываются: $\Delta l = \dfrac{F}{k_1}+\dfrac{F}{k_2}$. <strong>Параллельно</strong> общее удлинение, складываются силы.</p>
+<p><strong>In series</strong> the springs share the force and the extensions add: $\Delta l = \dfrac{F}{k_1}+\dfrac{F}{k_2}$. <strong>In parallel</strong> the extension is common and the forces add.</p>
 
-<h2 id="s4">4. Пружина, растянутая собственным весом</h2>
-<p>Натяжение в разных местах висящей пружины разное. Разрежем её мысленно на $N \gg 1$ одинаковых кусочков массой $m_1 = m/N$. Кусочки соединены последовательно, поэтому</p>
+<h2 id="s4">4. A spring stretched by its own weight</h2>
+<p>The tension differs from place to place in a hanging spring. Cut it mentally into $N \gg 1$ equal pieces of mass $m_1 = m/N$. The pieces are connected in series, so</p>
 $$\frac1k = \frac{N}{k_1} \;\Rightarrow\; k_1 = Nk.$$
 §hooke_pieces§
-<p>Нижний кусочек ничем не нагружен, следующий держит один кусочек, дальше — два, три … Для $i$-го снизу:</p>
+<p>The bottom piece carries no load, the next one holds one piece, then two, three … For the $i$-th piece from the bottom:</p>
 $$\Delta l_i = \frac{(i-1)\,m_1 g}{k_1}.$$
-<p>Складываем (растяжением кусочка под собственным весом пренебрегаем):</p>
+<p>Add them up (neglecting the stretching of a piece under its own weight):</p>
 $$\Delta l = \frac{m_1g}{k_1}\big(0+1+\ldots+(N-1)\big) = \frac{m_1 g}{2k_1}N(N-1) = \frac{mg}{2k}\cdot\frac{N-1}{N} \xrightarrow[N\to\infty]{} \frac{mg}{2k}.$$
-<div class="note"><span class="lbl">Результат</span>$$L = l_0 + \frac{mg}{2k}$$<p>Тяжёлая пружина растягивается так, будто весь её вес сосредоточен в середине.</p></div>
+<div class="note"><span class="lbl">Result</span>$$L = l_0 + \frac{mg}{2k}$$<p>A heavy spring stretches as if all its weight were concentrated at its middle.</p></div>
 
-<h2 id="s5">5. Эксперимент: жёсткость пружины</h2>
-<p>Масса пружины $31{,}4$ г, витков $47$, один виток $\approx 0{,}67$ г. Измерять только полную длину неточно, зато можно подвешивать разное число витков $n$. Пусть $l_1$ — длина витка без нагрузки, $m_1, k_1$ — масса и жёсткость одного витка:</p>
+<h2 id="s5">5. Experiment: the spring constant</h2>
+<p>The spring has a mass of $31.4$ g and $47$ turns, one turn $\approx 0.67$ g. Measuring only the full length is inaccurate, but one can hang different numbers of turns $n$. Let $l_1$ be the unloaded length of a turn, $m_1, k_1$ the mass and stiffness of one turn:</p>
 $$L_n = n\,l_1 + \frac{m_1 g}{2k_1}\,n^2.$$
-<p>Параболу трудно отличить на глаз от кубической кривой, поэтому линеаризуем:</p>
+<p>A parabola is hard to tell from a cubic curve by eye, so we linearise:</p>
 $$\frac{L_n}{n} = l_1 + \frac{m_1g}{2k_1}\,n.$$
 <table><tr><th>n</th><td>46</td><td>42</td><td>38</td><td>34</td><td>30</td><td>26</td><td>22</td><td>18</td></tr>
-<tr><th>L, см</th><td>120</td><td>108</td><td>86,5</td><td>68</td><td>52</td><td>40</td><td>29,5</td><td>20,5</td></tr></table>
+<tr><th>L, cm</th><td>120</td><td>108</td><td>86.5</td><td>68</td><td>52</td><td>40</td><td>29.5</td><td>20.5</td></tr></table>
 §hooke_spring_fit§
-<div class="note"><span class="lbl">Развёрнутое объяснение</span><p>Точки действительно ложатся близко к прямой. Наклон прямой (в метрах на виток) равен $s = m_1g/(2k_1)$, поэтому жёсткость одного витка $k_1 = m_1g/(2s)$, а всей пружины $k = k_1/47$. Прямая по этим точкам даёт $s\approx 5{,}6\cdot10^{-4}$ м, то есть $k_1\approx 5{,}8$ Н/м и $k\approx 0{,}12$ Н/м. Значение при $n = 22$ в тетради читается неуверенно (принято 29,5 см).</p></div>
+<div class="note"><span class="lbl">Detailed explanation</span><p>The points really do lie close to a straight line. Its slope (in metres per turn) is $s = m_1g/(2k_1)$, so the stiffness of one turn is $k_1 = m_1g/(2s)$ and that of the whole spring $k = k_1/47$. The line through these points gives $s\approx 5.6\cdot10^{-4}$ m, so $k_1\approx 5.8$ N/m and $k\approx 0.12$ N/m. The value at $n = 22$ is hard to read in the notebook (29.5 cm is assumed).</p></div>
 
-<h2 id="s6">6. Модуль Юнга</h2>
-<p>Для стержня длиной $l$ и сечением $A$: два одинаковых стержня встык мягче ($k \propto 1/l$), рядом — жёстче ($k\propto A$). Отсюда</p>
+<h2 id="s6">6. Young's modulus</h2>
+<p>For a rod of length $l$ and cross-section $A$: two equal rods end to end are softer ($k \propto 1/l$), side by side they are stiffer ($k\propto A$).</p>
 §hooke_rod§
 §hooke_young§
-<p>Объединяя обе зависимости, получаем</p>
+<p>Combining the two dependences gives</p>
 $$k = E\,\frac{A}{l},$$
-<p>где $E$ — <strong>модуль Юнга</strong>, зависящий только от материала.</p>
+<p>where $E$ is <strong>Young's modulus</strong>, which depends only on the material.</p>
 
-<h2 id="s7">7. Задачи</h2>
+<h2 id="s7">7. Problems</h2>
 §hooke_tasks§
-<h3 id="s7-1">1. Смешанное соединение</h3>
-<p>Пружина 10 Н/м, затем две параллельные по 10 Н/м (вместе 20), затем ещё 10 Н/м:</p>
-$$\frac1k = \frac1{10}+\frac1{20}+\frac1{10} = \frac{5}{20} \;\Rightarrow\; k = 4\ \text{Н/м}.$$
-<h3 id="s7-2">2. Пружина и блок</h3>
-<p>Блок подвешен на пружине, нить с одним закреплённым концом огибает его, тянем за свободный конец. На пружину действует $2F$, она растягивается на $2F/k$, а конец нити смещается вдвое больше — на $4F/k$. Эквивалентная жёсткость $k_\text{экв} = k/4$.</p>
-<h3 id="s7-3">3. Две пружины и блок</h3>
-<p>Если нижний конец нити тоже закреплён через пружину $k$: верхняя растянута на $\Delta x_1 = 2F/k$, нижняя на $\Delta x_2 = F/k$, конец нити смещается на $2\Delta x_1+\Delta x_2 = 5F/k$. Значит $k_\text{экв} = k/5$.</p>
-<h3 id="s7-4">4. Сосуд на пружине</h3>
+<h3 id="s7-1">1. Mixed combination</h3>
+<p>A 10 N/m spring, then two parallel ones of 10 N/m each (20 together), then another 10 N/m:</p>
+$$\frac1k = \frac1{10}+\frac1{20}+\frac1{10} = \frac{5}{20} \;\Rightarrow\; k = 4\ \text{N/m}.$$
+<h3 id="s7-2">2. A spring and a pulley</h3>
+<p>A pulley hangs on a spring; a string with one fixed end goes around it and we pull the free end. The spring carries $2F$ and stretches by $2F/k$, and the string end moves twice as far, $4F/k$. The equivalent stiffness is $k_\text{eq} = k/4$.</p>
+<h3 id="s7-3">3. Two springs and a pulley</h3>
+<p>If the lower end of the string is also fixed through a spring $k$: the upper one stretches by $\Delta x_1 = 2F/k$, the lower one by $\Delta x_2 = F/k$, and the string end moves $2\Delta x_1+\Delta x_2 = 5F/k$. So $k_\text{eq} = k/5$.</p>
+<h3 id="s7-4">4. A vessel on a spring</h3>
 §hooke_vessel§
-<p>1000 см³ жидкости плотности 0,8 г/см³ — это 800 г, то есть 8 Н. Добавка 8 Н деформирует пружину на 10 см, 16 Н — на 20 см: $k = 8/0{,}1 = 80$ Н/м.</p>
-<div class="note"><span class="lbl">Попутный факт о подвижном блоке</span><p>Скорости связаны так: $2u = v_1 + v_2$, где $u$ — скорость оси блока, $v_1, v_2$ — скорости концов нити (с учётом знаков).</p></div>
+<p>1000 cm³ of a liquid of density 0.8 g/cm³ is 800 g, that is 8 N. An extra 8 N deforms the spring by 10 cm, 16 N by 20 cm: $k = 8/0.1 = 80$ N/m.</p>
+<div class="note"><span class="lbl">A side fact about the movable pulley</span><p>The speeds are related by $2u = v_1 + v_2$, where $u$ is the speed of the pulley axle and $v_1, v_2$ are the speeds of the string ends (with signs).</p></div>
 §hooke_pulley_speed§
-<h3 id="s7-5">5. Жёсткость по грузу</h3>
-<p>Груз весом 1 Н растягивает пружину на 10 см: $k = \dfrac{F}{\Delta l} = \dfrac{1}{0{,}1} = 10$ Н/м.</p>
+<h3 id="s7-5">5. Stiffness from a load</h3>
+<p>A 1 N load stretches a spring by 10 cm: $k = \dfrac{F}{\Delta l} = \dfrac{1}{0.1} = 10$ N/m.</p>
 §hooke_load§
-<h3 id="s7-6">6. Пружина и трение</h3>
-<p>На подвижный блок массой $m/2$ действуют две ветви нити с натяжением $mg$ и его тяжесть, поэтому удерживающая сила равна $T = \dfrac52 mg$ (та же схема разобрана в теме «Статика», задача 2).</p>
+<h3 id="s7-6">6. A spring and friction</h3>
+<p>The movable pulley of mass $m/2$ is acted on by two branches of a string with tension $mg$ and by its own weight, so the holding force is $T = \dfrac52 mg$ (the same layout is solved in “Statics”, problem 2).</p>
 §st_friction_pulley§
-<h3 id="s7-7">7. Две пружины 2k и k с подвижным блоком</h3>
+<h3 id="s7-7">7. Springs 2k and k with a movable pulley</h3>
 §hooke_two_springs§
-<div class="note"><span class="lbl">Пояснение: решение добавлено</span><p>В тетради есть только схема. Сила $F$ делится поровну: в каждой пружине $F/2$, удлинения $\dfrac{F}{4k}$ и $\dfrac{F}{2k}$. Блок опускается на их полусумму $\dfrac{3F}{8k}$, значит $k_\text{экв} = \dfrac{8k}{3}$.</p></div>
+<div class="note"><span class="lbl">Note: solution added</span><p>The notebook has only the diagram. The force $F$ splits equally: $F/2$ in each spring, with extensions $\dfrac{F}{4k}$ and $\dfrac{F}{2k}$. The pulley moves down by their half-sum $\dfrac{3F}{8k}$, so $k_\text{eq} = \dfrac{8k}{3}$.</p></div>
