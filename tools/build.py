@@ -125,7 +125,7 @@ def index(lessons):
         cards.append(f'<a class="pcard" href="notes/{L["file"]}" data-k="{html.escape(key, quote=True)}"><div class="ph">'
                      f'<span class="badge" style="background:var({colors[i % 5]})">{i+1}</span><h3>{L["title"]}</h3></div>'
                      f'<ul class="tl">{items}</ul><div class="pf"><span>{n} {word} тетради</span><em>→</em></div></a>')
-    pages = sum(len(L["pages"].split()) for L in lessons)
+    pages = len({p for L in lessons for p in L["pages"].split()})
     return f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -154,7 +154,7 @@ def index(lessons):
       <div class="cta"><a class="btn1" href="#pick">Выбрать тему</a></div>
       <div class="sbox"><div class="search"><input id="q" type="search" placeholder="Поиск по темам: блоки, момент, пружина…" autocomplete="off" aria-label="Поиск по темам"></div></div>
     </div>
-    <div class="hstats"><div><b>{len(lessons)}</b><span>тем</span></div><div><b>{pages}</b><span>страницы и разворота тетради</span></div><div><b>1</b><span>файл на тему — читается офлайн</span></div></div>
+    <div class="hstats"><div><b>{len(lessons)}</b><span>тем</span></div><div><b>{pages}</b><span>фото страниц и разворотов тетради</span></div><div><b>1</b><span>файл на тему — читается офлайн</span></div></div>
   </div>
 </section>
 
