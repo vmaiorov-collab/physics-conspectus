@@ -75,7 +75,7 @@ def lesson(i, L, lessons, used):
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="sitelink" href="../index.html">← All topics</a><a class="back dl" href="{L["file"]}" download="{L["file"]}" title="Download these notes as a single HTML file that opens offline">⬇ Download notes</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div>
+<div class="top"><a class="sitelink" href="../index.html">← All topics</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div>
 
 <header class="hero">
   <h1>{title}</h1>
@@ -128,7 +128,7 @@ def index(lessons):
 </head>
 <body>
 <div class="page">
-<header class="nav"><div style="display:flex;align-items:center;gap:4px"><a class="brand" href="index.html">physics<i>.</i></a><nav class="links"><a href="#pick">Topics</a><a href="https://vmaiorov-collab.github.io/conspectus/">Programming notes</a></nav></div><div class="navr"><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div></header>
+<header class="nav"><div style="display:flex;align-items:center;gap:4px"><a class="brand" href="index.html">physics<i>.</i></a></div><div class="navr"><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div></header>
 
 <section class="hero2">
   <div class="hl">
@@ -136,7 +136,6 @@ def index(lessons):
       <span class="chip">Mechanics</span>
       <h1><span class="hi">Physics</span> notes</h1>
       <p>Definitions, derivations, drawings and solved problems. Every picture is redrawn in SVG.</p>
-      <div class="cta"><a class="btn1" href="#pick">Choose a topic</a></div>
       <div class="sbox"><div class="search"><input id="q" type="search" placeholder="Search topics: pulleys, moment, spring…" autocomplete="off" aria-label="Search topics"></div></div>
     </div>
     <div class="hstats"><div><b>{len(lessons)}</b><span>topics</span></div><div><b>{drawings}</b><span>drawings for topics and problems</span></div><div><b>1</b><span>file per topic, readable offline</span></div></div>

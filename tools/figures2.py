@@ -878,6 +878,54 @@ def st_resultant():
     return s.svg()
 
 
+@fig
+def st_overhang():
+    s = S(640, 270, "A board with a load sticks out past the edge of a table")
+    s.ground(40, 400, 150).line(400, 150, 400, 245, TEXT, 2)
+    s.rect(110, 130, 440, 20).rect(470, 100, 44, 30, ORANGE).text(492, 120, "M", ORANGE, 15)
+    s.arrow(250, 140, 250, 215, RED).text(250, 235, "mg", RED)
+    s.arrow(492, 130, 492, 215, ORANGE).text(492, 235, "Mg", ORANGE)
+    s.arrow(340, 150, 340, 55, GREEN).text(320, 68, "N", GREEN, 19).dot(400, 150, YELLOW, 5)
+    for x1, x2, y, lab in ((250, 400, 35, "l_0"), (340, 400, 100, "y"), (400, 492, 70, "x")):
+        s.line(x1, y, x2, y, MUTED, 1.5).line(x1, y - 6, x1, y + 6, MUTED, 1.5).line(x2, y - 6, x2, y + 6, MUTED, 1.5)
+        s.text((x1 + x2) / 2, y - 9, lab, MUTED, 16, "middle", True)
+    s.line(400, 25, 400, 150, MUTED, 1, "4 5").text(418, 172, "edge", YELLOW, 15, "start")
+    return s.svg()
+
+
+@fig
+def kin_messenger():
+    s = S(680, 230, "A messenger rides from the rear of a moving column to its front and back")
+    for y, lab, forward in ((65, "forward: v − u relative to the column", True), (165, "back: v + u relative to the column", False)):
+        s.rect(150, y, 340, 26).arrow(490, y + 13, 580, y + 13, ORANGE).text(600, y + 19, "u", ORANGE, 18, it=True)
+        x = 175 if forward else 465
+        s.dot(x, y - 14, GREEN, 8).arrow(x, y - 14, x + (90 if forward else -90), y - 14, GREEN)
+        s.text(x + (108 if forward else -108), y - 9, "v", GREEN, 18, it=True)
+        s.text(320, y + 48, lab, MUTED, 15)
+    s.text(320, 83, "L", TEXT, 17, "middle", True).text(320, 183, "L", TEXT, 17, "middle", True)
+    return s.svg()
+
+
+@fig
+def acc_three():
+    s = S(680, 290, "The same segment covered with acceleration, with braking and uniformly")
+    rows = ((70, "t_1 = 30 s", 1, "a"), (160, "t_2 = 60 s", -1, "a"), (250, "t_3 = ?", 0, ""))
+    for y, t, d, a in rows:
+        s.line(80, y, 520, y, TEXT, 2).line(80, y - 9, 80, y + 9, TEXT, 2).line(520, y - 9, 520, y + 9, TEXT, 2)
+        s.dot(80, y, BLUE, 7).arrow(80, y - 18, 170, y - 18, BLUE).text(188, y - 13, "v_0", BLUE, 17)
+        if d:
+            x = 270 if d > 0 else 345
+            s.arrow(x, y - 18, x + 75 * d, y - 18, ORANGE).text(x + 93 * d, y - 13, a, ORANGE, 17, it=True)
+        else:
+            s.text(310, y - 13, "a = 0", MUTED, 16)
+        s.text(595, y + 5, t, YELLOW, 17)
+    s.text(300, 280, "L", TEXT, 17, "middle", True)
+    return s.svg()
+
+
+F["pul_3c"] = lambda: zigzag("Load M at the string end and equal loads m on both movable pulleys", "fmfm", "c", loads=["m", "m"], start="M", tens=["T = Mg", "mg = 2T", "m = 2M"])
+
+
 # ================= 10. Импульс =================
 @fig
 def mom_carts():

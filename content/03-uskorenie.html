@@ -41,6 +41,15 @@ $$2 = \frac{48}{v_1^2 - 1} \;\Rightarrow\; v_1 = 5\ \text{m/s}.$$
 $$a = \frac{v_0^2}{2S} = \frac{200}{200} = 1\ \text{m/s}^2, \qquad t = \frac{2S}{v_0} = \frac{200}{10\sqrt2} \approx 14.1\ \text{s}.$$
 <p>(The first attempt in the notebook, with $v_0 = 20$ m/s, is crossed out.)</p>
 
+<h3 id="s3-4">The same segment three times (P3)</h3>
+<div class="warn"><span class="lbl">Reconstructed statement</span><p>The notebook has only three diagrams with the times 30 s and 60 s. The statement is restored from them, assuming both accelerations have the same magnitude: a body covers one segment, always starting with speed $v_0$. With acceleration $a$ along the velocity it takes $t_1 = 30$ s, with acceleration $a$ against the velocity $t_2 = 60$ s. How long does it take with no acceleration?</p></div>
+§acc_three§
+<p>The length $L$ is the same in all three cases:</p>
+$$L = v_0t_1 + \frac{at_1^2}{2} = v_0t_2 - \frac{at_2^2}{2}.$$
+<p>With numbers: $30v_0 + 450a = 60v_0 - 1800a$, so $v_0 = 75a$ and $L = 30\cdot75a + 450a = 2700a$.</p>
+<div class="note"><span class="lbl">Answer</span>$$t_3 = \frac{L}{v_0} = \frac{2700a}{75a} = 36\ \text{s}.$$</div>
+<p>Check: the braking body would stop only after $v_0/a = 75$ s, so within 60 s it does not turn back. In general $t_3 = \dfrac{t_1t_2(t_1+t_2)}{t_1^2+t_2^2}$.</p>
+
 <h2 id="s4">4. Braking and turning back</h2>
 <p>The initial velocity $v_0$ is along the axis, the acceleration $a$ against it. Find $d_x(t)$ and the distance $S(t)$.</p>
 $$d_x(t) = v_0 t - \frac{at^2}{2}.$$
@@ -79,4 +88,3 @@ $$S = \frac{a_1t_1^2}{2} + a_1t_1t_2 + \frac{a_2t_2^2}{2}.$$
 <p>Next to the problems there are calculations without a written statement:</p>
 $$\Delta s = \Delta v\cdot t + \Delta t\cdot v, \qquad v = \frac{\Delta v}{\Delta t}\,t + v_0.$$
 <p>The speed changes by $15$ m/s in $6$ minutes: $a = \dfrac{15}{360} = \dfrac1{24}$ m/s². Then after $60$ s $v = \dfrac1{24}\cdot 60 + 2.5 = 5$ m/s, and separately $5 - 15 = -10$ m/s is written.</p>
-<p>A problem about a train and a bridge is also started (with $30$ s and $60$ s given); the solution is not finished.</p>

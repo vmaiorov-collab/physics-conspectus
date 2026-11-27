@@ -487,7 +487,7 @@ html[data-theme] .secbtn, html[data-theme] .secpanel{display:none !important}
 .top .sitelink,.top .theme-toggle,.top .look-toggle{padding:5px 14px!important}
 </style>
 <style id="sitecolor">.top .sitelink{background:#d4f56a;border-color:#d4f56a;color:#111!important}.top .sitelink:hover{filter:brightness(.95)}html[data-theme="dark"] .top .sitelink{background:none;border-color:#d4f56a;color:#d4f56a!important}</style>
-<style id="dlstyle">.top{flex-wrap:wrap}.top .dl{margin-left:auto;margin-right:8px;white-space:nowrap}</style>
+<style id="topbar">.top{flex-wrap:wrap}.top .theme-toggle{margin-left:auto}</style>
 <style id="accent">html[data-look="book"]{--acc-l:#0b7a31; --acc-d:#4ec46f}</style>
 <style id="book">
 /* ── палитра книжного вида: холодный стол, белый лист ── */
@@ -767,7 +767,7 @@ html[data-theme] .wrap th{text-transform:none;letter-spacing:0}
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="sitelink" href="../index.html">← All topics</a><a class="back dl" href="02-kinematika.html" download="02-kinematika.html" title="Download these notes as a single HTML file that opens offline">⬇ Download notes</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div>
+<div class="top"><a class="sitelink" href="../index.html">← All topics</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div>
 
 <header class="hero">
   <h1>2. Kinematics and motion graphs</h1>
@@ -856,7 +856,13 @@ $$\int_0^t T(t)\,dt = st - A, \qquad \int_0^t B(t)\,dt = st + A.$$
 <li>$v(x)$: “forward” at $4$ m/s from $x=0$ to $4$ m, “back” at $2$ m/s from $4$ to $2$ m.</li>
 </ul>
 <h3 id="s8-1">Two more problems from the notebook</h3>
-<p>For problem 4.4 only the answer is written down: <strong>4 m and 1 m/s</strong>; the statement is not in the notebook. For problem 4.5 there is a sketch with the quantities $v$, $L$ and $u$ and no solution.</p>
+<p><strong>4.4.</strong> Only the answer is written down: <strong>4 m and 1 m/s</strong>. The statement is not in the notebook, so the solution cannot be restored.</p>
+<h3 id="s8-2">4.5. A messenger and a moving column</h3>
+<div class="warn"><span class="lbl">Reconstructed statement</span><p>The notebook has only a sketch with $v$, $L$ and $u$. The statement and solution below are added: a column of length $L$ moves with speed $u$. A messenger rides from its rear to its front and straight back with speed $v \gt u$ (relative to the ground). How long does the trip take, and how far does the messenger travel?</p></div>
+<figure class="viz"><svg viewBox="0 0 680 230" role="img" aria-label="A messenger rides from the rear of a moving column to its front and back" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Segoe UI,Roboto,sans-serif"><rect width="680" height="230" rx="12" fill="#141a24"/><rect x="150.0" y="65.0" width="340.0" height="26.0" rx="4" fill="#9aa4b2" fill-opacity="0.16" stroke="#58c4dd" stroke-width="2"/><line x1="490.0" y1="78.0" x2="569.0" y2="78.0" stroke="#ff8c1a" stroke-width="3" stroke-linecap="round"/><path d="M580.0,78.0 L569.0,83.5 L569.0,72.5z" class="solid" fill="#ff8c1a"/><text x="600.0" y="84.0" fill="#ff8c1a" font-size="18" text-anchor="middle" font-style="italic">u</text><circle cx="175.0" cy="51.0" r="8" class="solid" fill="#83c167"/><line x1="175.0" y1="51.0" x2="254.0" y2="51.0" stroke="#83c167" stroke-width="3" stroke-linecap="round"/><path d="M265.0,51.0 L254.0,56.5 L254.0,45.5z" class="solid" fill="#83c167"/><text x="283.0" y="56.0" fill="#83c167" font-size="18" text-anchor="middle" font-style="italic">v</text><text x="320.0" y="113.0" fill="#9aa4b2" font-size="15" text-anchor="middle">forward: v − u relative to the column</text><rect x="150.0" y="165.0" width="340.0" height="26.0" rx="4" fill="#9aa4b2" fill-opacity="0.16" stroke="#58c4dd" stroke-width="2"/><line x1="490.0" y1="178.0" x2="569.0" y2="178.0" stroke="#ff8c1a" stroke-width="3" stroke-linecap="round"/><path d="M580.0,178.0 L569.0,183.5 L569.0,172.5z" class="solid" fill="#ff8c1a"/><text x="600.0" y="184.0" fill="#ff8c1a" font-size="18" text-anchor="middle" font-style="italic">u</text><circle cx="465.0" cy="151.0" r="8" class="solid" fill="#83c167"/><line x1="465.0" y1="151.0" x2="386.0" y2="151.0" stroke="#83c167" stroke-width="3" stroke-linecap="round"/><path d="M375.0,151.0 L386.0,145.5 L386.0,156.5z" class="solid" fill="#83c167"/><text x="357.0" y="156.0" fill="#83c167" font-size="18" text-anchor="middle" font-style="italic">v</text><text x="320.0" y="213.0" fill="#9aa4b2" font-size="15" text-anchor="middle">back: v + u relative to the column</text><text x="320.0" y="83.0" fill="#dfe7f1" font-size="17" text-anchor="middle" font-style="italic">L</text><text x="320.0" y="183.0" fill="#dfe7f1" font-size="17" text-anchor="middle" font-style="italic">L</text></svg></figure>
+<p>Work in the reference frame of the column. On the way forward the messenger approaches the front with speed $v-u$, on the way back approaches the rear with speed $v+u$:</p>
+$$t_1 = \frac{L}{v-u}, \qquad t_2 = \frac{L}{v+u}.$$
+<div class="note"><span class="lbl">Answer</span>$$t = t_1 + t_2 = \frac{2Lv}{v^2-u^2}, \qquad S = vt = \frac{2Lv^2}{v^2-u^2}.$$<p>If $v$ in the sketch means the speed relative to the column, one trip from end to end simply takes $L/v$.</p></div>
 
 
 <footer>
