@@ -484,10 +484,10 @@ def st_lever():
     s.pulley(105, 170, 25).line(105, 170, 105, 215, TEXT).rect(85, 215, 40, 36).text(105, 238, "m₁", BLUE, 15)
     s.rect(130, 88, 400, 12).support(430, 100).text(430, 150, "O", TEXT)
     s.line(530, 100, 530, 200, TEXT).rect(505, 200, 50, 40, GREEN).text(530, 226, "m₂", GREEN, 15)
-    s.arrow(130, 88, 130, 45, YELLOW).text(170, 55, "m₁g/2", YELLOW, 15)
+    s.force(130, 100, 130, 130, "m_1g/2", YELLOW, 8, -2)
     s.arrow(555, 200, 555, 260, RED).text(590, 255, "m₂g", RED, 15)
     s.text(280, 78, "l", TEXT, 19, it=True).text(480, 78, "L − l", TEXT, 17, it=True)
-    s.force(80, 170, 80, 125, "T", YELLOW, -7, 0, "end").force(130, 170, 130, 125, "T", YELLOW)
+    s.force(80, 170, 80, 125, "T", YELLOW, -7, 0, "end").force(130, 170, 130, 140, "T", YELLOW, 8, 8)
     s.force(105, 170, 105, 212, "m_1g", GREEN, 8, -8).force(105, 251, 105, 288, "m_1g", RED)
     s.force(105, 215, 105, 190, "", GREEN).force(430, 100, 430, 45, "N", GREEN, 8, 8)
     s.force(530, 100, 530, 150, "m_2g", ORANGE, -8, 0, "end").force(530, 200, 530, 168, "", ORANGE)
@@ -508,18 +508,21 @@ def st_rod():
 
 @fig
 def st_seven():
-    s = S(640, 290, "Uniform lever of seven divisions with weight, string force and pivot reaction")
+    s = S(640, 330, "Uniform lever of seven divisions: weight, pull of a string from a movable pulley and pivot reaction")
     x = lambda i: 70 + i * 60
     s.rect(x(0), 110, 420, 14)
     for i in range(1, 7):
         s.line(x(i), 110, x(i), 124, MUTED, 1.5)
     s.line(x(0), 110, x(0), 55, TEXT).ground(40, 110, 55, True)
-    s.line(x(6), 110, x(6), 55, TEXT).ground(x(6) - 40, x(6) + 40, 55, True)
+    s.pulley(470, 200, 38).line(x(6), 124, x(6), 200, TEXT).path("M430,200 A40,40 0 0 0 510,200", TEXT, 2)
+    s.line(510, 200, 510, 55, TEXT).ground(480, 550, 55, True)
+    s.line(470, 200, 470, 262, TEXT).rect(450, 262, 40, 32, BLUE).text(470, 284, "m", BLUE)
     s.support(x(4), 124).force(x(4), 124, x(4), 72, "N", GREEN, 8, 8)
     s.dot(x(3.5), 117, RED, 5).force(x(3.5), 117, x(3.5), 215, "Mg", RED, -8, 0, "end")
-    s.force(x(6), 110, x(6), 68, "mg/2", YELLOW)
-    s.text(x(3.75), 235, "ℓ/2", RED, 15).line(x(3.5), 217, x(4), 217, RED, 2).text(x(5), 200, "2ℓ", YELLOW, 15).line(x(4), 207, x(6), 207, YELLOW, 2)
-    s.text(320, 272, "ℓ is one division; the left string is slack", MUTED, 14)
+    s.force(x(6), 124, x(6), 170, "mg/2", YELLOW, -8, -4, "end").force(510, 200, 510, 154, "mg/2", YELLOW)
+    s.force(470, 200, 470, 252, "mg", GREEN, 7, -4).force(470, 294, 470, 322, "mg", RED)
+    s.text(x(3.75), 36, "ℓ/2", RED, 15).line(x(3.5), 45, x(4), 45, RED, 2).text(x(5), 36, "2ℓ", YELLOW, 15).line(x(4), 45, x(6), 45, YELLOW, 2)
+    s.text(230, 272, "ℓ is one division; the left string is slack", MUTED, 14)
     return s.svg()
 
 
