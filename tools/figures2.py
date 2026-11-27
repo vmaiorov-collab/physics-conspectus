@@ -486,24 +486,33 @@ def tens_frictionless():
     return s.svg()
 
 
-def zigzag(label, kinds, end, loads=None, tens=None, start=None, platform=None, h=360, d=64):
+def zigzag(label, kinds, end, loads=None, tens=None, start=None, platform=None, h=480, d=84):
     """Одна нить: вертикальные участки, соединённые подвижными ('m') и неподвижными ('f') блоками.
 
     start: None — левый конец на потолке, иначе подпись груза на левом конце.
     end: 'c' потолок, 'p' платформа, 'F' свободный конец с силой, иначе подпись груза.
+    Нарисованы все силы: натяжения T, силы крюков 2T и силы тяжести.
     """
     r = d / 2
     n = len(kinds)
-    x0 = 90
+    x0 = 70
     xs = [x0 + i * d for i in range(n + 1)]
-    W = max(540, int(xs[-1] + 210))
+    W = max(560, int(xs[-1] + 230))
     s = S(W, h, label)
-    top, hi, lo, bot = 30, 90, 200, h - 70
-    s.ground(50, xs[-1] + 40, top, True)
+    top, hi, lo, bot = 30, 105, 235, 340
+    ly = lo + 118  # верх грузов
+    s.ground(40, xs[-1] + 40, top, True)
     ys = [hi if k == "f" else lo for k in kinds]
+    forces = []  # рисуются последними, поверх нити и блоков
+
+    def load_(x, name, c):
+        box(s, x, ly, name, c)
+        forces.append((x, ly, x, ly - 28, "T" if c == ORANGE else "2T", YELLOW))
+        forces.append((x, ly + 36, x, ly + 84, name + "g", RED))
+
     if start:
-        s.line(xs[0], ys[0], xs[0], lo + 40, TEXT)
-        box(s, xs[0], lo + 40, start, ORANGE)
+        s.line(xs[0], ys[0], xs[0], ly, TEXT)
+        load_(xs[0], start, ORANGE)
     else:
         s.line(xs[0], top, xs[0], ys[0], TEXT)
     for i in range(1, n):
@@ -514,29 +523,44 @@ def zigzag(label, kinds, end, loads=None, tens=None, start=None, platform=None, 
         sweep = 1 if k == "f" else 0
         s.pulley(cx, ys[i], r - 2)
         s.path(f"M{xs[i]},{ys[i]} A{r},{r} 0 0 {sweep} {xs[i+1]},{ys[i]}", TEXT, 2)
+        down = 1 if k == "f" else -1
+        for x in (xs[i], xs[i + 1]):  # натяжение двух ветвей, действующее на блок
+            forces.append((x, ys[i], x, ys[i] + 40 * down, "T", YELLOW))
         if k == "f":
             s.line(cx, top, cx, ys[i], TEXT, 2)
-        elif platform:
-            s.line(cx, ys[i], cx, bot, TEXT, 2)
-        elif loads:
-            s.line(cx, ys[i], cx, lo + 55, TEXT, 2)
-            box(s, cx, lo + 55, loads[mi], GREEN)
-            mi += 1
+            forces.append((cx, hi, cx, hi - 55, "2T", GREEN))
+        else:
+            forces.append((cx, lo, cx, lo + 60, "2T", GREEN))
+            if platform:
+                s.line(cx, ys[i], cx, bot, TEXT, 2)
+                forces.append((cx, bot, cx, bot - 28, "2T", YELLOW))
+            elif loads:
+                s.line(cx, ys[i], cx, ly, TEXT, 2)
+                load_(cx, loads[mi], GREEN)
+                mi += 1
     last = ys[-1]
     if end == "c":
         s.line(xs[n], last, xs[n], top, TEXT)
     elif end == "p":
         s.line(xs[n], last, xs[n], bot, TEXT)
+        forces.append((xs[n], bot, xs[n], bot - 28, "T", YELLOW))
     elif end == "F":
-        s.line(xs[n], last, xs[n], lo, TEXT).arrow(xs[n], lo - 20, xs[n], lo + 50, YELLOW).text(xs[n] + 20, lo + 40, "F", YELLOW, 19)
+        s.line(xs[n], last, xs[n], 290, TEXT)
+        forces.append((xs[n], 270, xs[n], 330, "F = T", YELLOW))
     else:
-        s.line(xs[n], last, xs[n], lo + 40, TEXT)
-        box(s, xs[n], lo + 40, end, ORANGE)
+        s.line(xs[n], last, xs[n], ly, TEXT)
+        load_(xs[n], end, ORANGE)
     if platform:
         right = xs[n] + 24 if end == "p" else xs[n] - 28
-        s.rect(xs[0] - 10, bot, right - xs[0] + 10, 42).text((xs[0] + right) / 2, bot + 27, platform, BLUE, 18)
+        left = xs[0] - 10
+        mid = (left + right) / 2
+        s.rect(left, bot, right - left, 42).text(mid, bot + 20, platform, BLUE, 16)
+        weight = "mg" if platform.startswith("m =") else platform + "g"
+        forces.append((mid, bot + 30, mid, bot + 90, weight, RED))
+    for x1, y1, x2, y2, t, c in forces:
+        s.force(x1, y1, x2, y2, t, c, 7, 0)
     for i, t in enumerate(tens or []):
-        s.text(W - 100, 120 + 34 * i, t, YELLOW if i == 0 else TEXT, 18)
+        s.text(W - 95, 120 + 34 * i, t, YELLOW if i == 0 else TEXT, 18)
     return s.svg()
 
 
@@ -549,97 +573,146 @@ F["pul_eq1"] = lambda: zigzag("The free end is pulled with force F; the load han
 F["pul_eq3"] = lambda: zigzag("Platform on a movable pulley and on the end of the same string", "mf", "p", platform="m = 30 kg", tens=["2T + T = mg", "T = 100 N"])
 
 
-def cascade(label, stages, end, labs, formula, load="m_1"):
-    """Цепочка подвижных блоков: правая ветвь каждого держит ось следующего."""
-    s = S(660, 400, label)
+def cascade(label, stages, end, labs, formula, load="m_1", axle=None):
+    """Цепочка подвижных блоков: правая ветвь каждого держит ось следующего. Нарисованы все силы."""
+    s = S(640, 660, label)
     top = 30
-    s.ground(60, 440, top, True)
-    rad = [20, 30, 40][:stages]
-    cx, y = 130, 280
+    s.ground(40, 440, top, True)
+    rad = [34, 48, 62][:stages]
+    cx, y = 100, 470
     pos = []
     for r in rad:
         pos.append((cx, y, r))
-        cx, y = cx + r, y - 75
+        cx, y = cx + r, y - 130
     for i, (x, py, r) in enumerate(pos):
         s.pulley(x, py, r - 2)
         s.line(x - r, top, x - r, py, TEXT, 2).path(f"M{x-r},{py} A{r},{r} 0 0 0 {x+r},{py}", TEXT, 2)
         if i + 1 < stages:
             s.line(x + r, py, x + r, pos[i + 1][1], TEXT, 2)
-        s.text(x + r + 20, py + 22, labs[i], YELLOW, 16)
     x, py, r = pos[0]
-    s.line(x, py, x, 325, TEXT)
-    box(s, x, 325, load)
-    x, py, r = pos[-1]
+    s.line(x, py, x, 555, TEXT)
+    box(s, x, 555, load, BLUE, 64, 38)
+    xe, ye, re_ = pos[-1]
+    xe += re_
     if end == "c":
-        s.line(x + r, py, x + r, top, TEXT, 2)
+        s.line(xe, ye, xe, top, TEXT, 2)
     elif end == "T":
-        s.line(x + r, py, x + r, 75, TEXT, 2).arrow(x + r, py - 10, x + r, 55, YELLOW).text(x + r + 20, 70, "T", YELLOW, 19)
+        s.line(xe, ye, xe, 45, TEXT, 2)
     else:
         R = 30
-        s.pulley(x + r + R, 75, R - 2)
-        s.line(x + r, py, x + r, 75, TEXT, 2).path(f"M{x+r},75 A{R},{R} 0 0 1 {x+r+2*R},75", TEXT, 2)
-        s.line(x + r + R, top, x + r + R, 75, TEXT).line(x + r + 2 * R, 75, x + r + 2 * R, 230, TEXT)
-        box(s, x + r + 2 * R, 230, end, GREEN)
+        s.pulley(xe + R, 90, R - 2)
+        s.line(xe, ye, xe, 90, TEXT, 2).path(f"M{xe},90 A{R},{R} 0 0 1 {xe+2*R},90", TEXT, 2)
+        s.line(xe + R, top, xe + R, 90, TEXT).line(xe + 2 * R, 90, xe + 2 * R, 260, TEXT)
+        box(s, xe + 2 * R, 260, end, GREEN)
+        t = labs[-1]
+        s.force(xe, 90, xe, 135, t).force(xe + 2 * R, 90, xe + 2 * R, 135, t)
+        s.force(xe + R, 90, xe + R, 42, "2" + t, GREEN)
+        s.force(xe + 2 * R, 260, xe + 2 * R, 215, t).force(xe + 2 * R, 296, xe + 2 * R, 350, end + "g", RED)
+    axle = axle or ["2" + labs[0]] + labs[:-1]
+    for i, (x, py, r) in enumerate(pos):
+        s.force(x - r, py, x - r, py - 40, labs[i], YELLOW, 7, 4, "start", 18)
+        s.force(x + r, py, x + r, py - 40, labs[i], YELLOW, 8, 4, "start", 18)
+        s.force(x, py, x, py + (62 if i == 0 else 72), axle[i], GREEN, 8, 0, "start", 17)
+    x, py, r = pos[0]
+    s.force(x, 555, x, 536, "", GREEN)
+    s.force(x, 593, x, 640, ("mg" if load.endswith("kg") or load == "m" else load + "g"), RED)
+    if end == "T":
+        s.text(xe + 12, 56, "T (pull)", YELLOW, 15, "start")
+        s.arrow(xe, 90, xe, 45, YELLOW)
     for i, t in enumerate(formula):
-        s.text(480, 290 + 34 * i, t, TEXT, 18)
+        s.text(490, 420 + 34 * i, t, TEXT, 19)
     return s.svg()
 
 
 F["pul_1c"] = lambda: cascade("Two movable pulleys one after another", 2, "c", ["T_2", "T_1"], ["2T_2 = mg, T_2 = 100 N", "T_1 = T_2/2 = 50 N"], "20 kg")
 F["pul_2b"] = lambda: cascade("Cascade of two movable pulleys with load m2", 2, "m_2", ["T_1", "T_2"], ["m_1g = 2T_1 = 4T_2", "m_1/m_2 = 4"])
 F["pul_cascade"] = lambda: cascade("Cascade of three movable pulleys with load m2", 3, "m_2", ["T_1", "T_2", "T_3"], ["m_1g = 8T_3 = 8m_2g", "m_1/m_2 = 8"])
-F["pul_eq2"] = lambda: cascade("Cascade of two movable pulleys, string end pulled with force T", 2, "T", ["W/2", "W/4"], ["T = W/4", "W = 80 N, m = 8 kg"], "m")
+F["pul_eq2"] = lambda: cascade("Cascade of two movable pulleys, string end pulled with force T", 2, "T", ["W/2", "W/4"], ["T = W/4", "W = 80 N, m = 8 kg"], "m", ["W", "W/2"])
 
 
 @fig
 def pul_eq4():
-    s = S(720, 300, "Horizontal pulley chain: the pull T halves at every stage")
-    s.wall(20, 235, 620, False)
-    for x, y in ((110, 70), (240, 100), (370, 130)):
+    s = S(760, 380, "Horizontal pulley chain with all forces: the pull T halves at every stage")
+    s.wall(20, 240, 660, False)
+    for x, y in ((130, 70), (280, 100), (430, 130)):
         s.pulley(x, y, 28)
-    s.pulley(480, 182, 20)
-    s.arrow(110, 70, 35, 70, YELLOW).text(55, 55, "T", YELLOW, 19)
-    s.line(110, 40, 620, 40, TEXT, 2).path("M110,40 A30,30 0 0 0 110,100", TEXT, 2).line(110, 100, 240, 100, TEXT, 2)
-    s.line(240, 70, 620, 70, TEXT, 2).path("M240,70 A30,30 0 0 0 240,130", TEXT, 2).line(240, 130, 370, 130, TEXT, 2)
-    s.line(370, 100, 620, 100, TEXT, 2).path("M370,100 A30,30 0 0 0 370,160", TEXT, 2).line(370, 160, 480, 160, TEXT, 2)
-    s.path("M480,160 A22,22 0 0 1 502,182", TEXT, 2).line(502, 182, 502, 230, TEXT).line(480, 182, 620, 182, MUTED, 2)
-    box(s, 502, 230, "m")
-    s.text(330, 32, "T/2", YELLOW, 15).text(180, 117, "T/2", YELLOW, 15).text(430, 62, "T/4", GREEN, 15).text(310, 147, "T/4", GREEN, 15).text(520, 93, "T/8", ORANGE, 15).text(430, 176, "T/8", ORANGE, 15)
-    s.text(180, 240, "mg = T/8", TEXT, 19).text(200, 270, "T = 8 kN ⇒ mg = 1 kN", MUTED, 17)
+    s.pulley(560, 182, 20)
+    s.line(130, 40, 660, 40, TEXT, 2).path("M130,40 A30,30 0 0 0 130,100", TEXT, 2).line(130, 100, 280, 100, TEXT, 2)
+    s.line(280, 70, 660, 70, TEXT, 2).path("M280,70 A30,30 0 0 0 280,130", TEXT, 2).line(280, 130, 430, 130, TEXT, 2)
+    s.line(430, 100, 660, 100, TEXT, 2).path("M430,100 A30,30 0 0 0 430,160", TEXT, 2).line(430, 160, 560, 160, TEXT, 2)
+    s.path("M560,160 A22,22 0 0 1 582,182", TEXT, 2).line(582, 182, 582, 250, TEXT).line(560, 182, 660, 182, MUTED, 2)
+    box(s, 582, 250, "m")
+    s.force(130, 70, 50, 70, "T", YELLOW, -2, -10, "middle")
+    for x, y1, y2, t, c in ((130, 40, 100, "T/2", YELLOW), (280, 70, 130, "T/4", GREEN), (430, 100, 160, "T/8", ORANGE)):
+        s.force(x, y1, x + 62, y1, t, c, -14, -7, "middle").force(x, y2, x + 62, y2, t, c, -14, 17, "middle")
+    s.force(280, 100, 218, 100, "T/2", YELLOW, 10, -8, "middle").force(430, 130, 368, 130, "T/4", GREEN, 10, -8, "middle")
+    s.force(560, 160, 505, 160, "T/8", ORANGE, 8, -8, "middle").force(582, 182, 582, 225, "T/8", ORANGE)
+    s.force(560, 182, 602, 140, "axle", GREEN, 6, 0)
+    s.force(582, 250, 582, 222, "", ORANGE).force(582, 286, 582, 336, "mg", RED)
+    s.text(200, 300, "mg = T/8", TEXT, 19).text(220, 330, "T = 8 kN ⇒ mg = 1 kN", MUTED, 17)
     return s.svg()
 
 
 @fig
 def pul_eq5():
-    s = S(640, 420, "Platform m2 hangs on four segments and is balanced by load m1")
-    s.ground(50, 360, 30, True)
+    s = S(900, 700, "Platform m2 on four segments balanced by load m1, with all forces")
+    k = 1.7
+    P = lambda x, y: (x * k - 20, y * k - 15)
+
+    def ln(x1, y1, x2, y2):
+        s.line(*P(x1, y1), *P(x2, y2), TEXT, 2)
+
+    def arc(x1, x2, y, sweep):
+        r = (x2 - x1) / 2 * k
+        (a, b), (c, d) = P(x1, y), P(x2, y)
+        s.path(f"M{a},{b} A{r},{r} 0 0 {sweep} {c},{d}", TEXT, 2)
+
+    s.ground(P(50, 30)[0], P(360, 30)[0], P(50, 30)[1], True)
     for x, y, r in ((100, 75, 38), (162, 285, 20), (206, 210, 20), (228, 150, 20), (258, 85, 28)):
-        s.pulley(x, y, r)
-    s.line(100, 30, 100, 75, TEXT, 2).path("M60,75 A40,40 0 0 1 140,75", TEXT, 2).line(60, 75, 60, 340, TEXT, 2).line(140, 75, 140, 285, TEXT, 2)
-    s.path("M140,285 A22,22 0 0 0 184,285", TEXT, 2).line(184, 285, 184, 210, TEXT, 2).line(162, 285, 162, 340, TEXT, 2)
-    s.path("M184,210 A22,22 0 0 1 228,210", TEXT, 2).line(228, 210, 228, 340, TEXT, 2)
-    s.line(206, 210, 206, 150, TEXT, 2).path("M206,150 A22,22 0 0 1 250,150", TEXT, 2).line(250, 150, 250, 340, TEXT, 2)
-    s.line(228, 150, 228, 85, TEXT, 2).path("M228,85 A30,30 0 0 1 288,85", TEXT, 2).line(288, 85, 288, 170, TEXT, 2).line(258, 30, 258, 85, TEXT, 2)
-    box(s, 300, 170, "m_1")
-    s.rect(45, 340, 230, 50).text(160, 372, "m_2", BLUE, 19)
-    s.text(38, 200, "W/4", YELLOW, 14).text(120, 330, "W/2", GREEN, 14).text(206, 330, "W/4", YELLOW, 14).text(272, 300, "W/2", GREEN, 14)
-    s.text(490, 130, "W = m_1g", TEXT, 18).text(490, 175, "m_2g = W/4 + W/2", TEXT, 17).text(525, 205, "+ W/4 + W/2", TEXT, 17).text(490, 250, "m_1/m_2 = 2/3", YELLOW, 20)
+        s.pulley(*P(x, y), r * k)
+    ln(100, 30, 100, 75); arc(60, 140, 75, 1); ln(60, 75, 60, 360); ln(140, 75, 140, 285)
+    arc(140, 184, 285, 0); ln(184, 285, 184, 210); ln(162, 285, 162, 360)
+    arc(184, 228, 210, 1); ln(228, 210, 228, 360); ln(206, 210, 206, 150)
+    arc(206, 250, 150, 1); ln(250, 150, 250, 360); ln(228, 150, 228, 85)
+    arc(228, 288, 85, 1); ln(288, 85, 288, 170); ln(258, 30, 258, 85)
+    box(s, *P(300, 170), "m_1", ORANGE, 60, 44)
+    (a, b), (c, d) = P(45, 360), P(275, 360)
+    s.rect(a, b, c - a, 48).text(P(105, 360)[0], b + 30, "m_2", BLUE, 19)
+
+    def f(x, y, dy, t, c=YELLOW, left=False):
+        a, b = P(x, y)
+        s.force(a, b, a, b + dy, t, c, -6 if left else 6, 2, "end" if left else "start", 15)
+
+    f(60, 75, 40, "W/4", left=True); f(140, 75, 40, "W/4"); f(100, 75, -55, "W/2", GREEN, True)
+    f(140, 285, -50, "W/4", left=True); f(184, 285, -50, "W/4"); f(162, 285, 55, "W/2", GREEN, True)
+    f(184, 210, 34, "W/4", left=True); f(228, 210, 34, "W/4"); f(206, 210, -36, "W/2", GREEN, True)
+    f(206, 150, 34, "W/2", left=True); f(250, 150, 34, "W/2"); f(228, 150, -36, "W", GREEN, True)
+    f(228, 85, 34, "W", left=True); f(288, 85, 34, "W"); f(258, 85, -55, "2W", GREEN, True)
+    f(60, 360, -45, "W/4", left=True); f(162, 360, -45, "W/2", left=True); f(228, 360, -45, "W/4", left=True); f(250, 360, -45, "W/2")
+    f(150, 388, 45, "m_2g", RED)
+    f(288, 170, -22, "", YELLOW); s.force(P(300, 170)[0], P(300, 170)[1] + 44, P(300, 170)[0], P(300, 170)[1] + 110, "W = m_1g", RED)
+    s.text(720, 130, "W = m_1g", TEXT, 20).text(720, 175, "m_2g = W/4 + W/2", TEXT, 19).text(755, 208, "+ W/4 + W/2", TEXT, 19).text(720, 255, "m_1/m_2 = 2/3", YELLOW, 22)
     return s.svg()
 
 
 @fig
 def pul_infinite():
-    s = S(640, 360, "An infinite chain of movable pulleys with equal loads")
-    s.ground(60, 520, 30, True)
-    pos = [(130, 255, 22), (152, 180, 30), (182, 108, 36)]
+    s = S(680, 480, "An infinite chain of movable pulleys with equal loads, with all forces")
+    s.ground(40, 520, 30, True)
+    pos = [(110, 385, 28), (138, 250, 38), (176, 115, 46)]
     for i, (x, y, r) in enumerate(pos):
         s.pulley(x, y, r - 2)
         s.line(x - r, 30, x - r, y, TEXT, 2).path(f"M{x-r},{y} A{r},{r} 0 0 0 {x+r},{y}", TEXT, 2)
         if i < 2:
             s.line(x + r, y, x + r, pos[i + 1][1], TEXT, 2)
-        s.arrow(x, y + r, x, y + r + 32, RED, 2).text(x + 24, y + r + 30, "Mg", RED, 14)
-    s.line(218, 108, 275, 55, TEXT, 2, "6 6").text(300, 55, "…", TEXT, 28)
-    s.text(450, 170, "A = (A + Mg)/2", TEXT, 20).text(450, 215, "A = Mg", YELLOW, 22)
+    s.line(222, 115, 290, 55, TEXT, 2, "6 6").text(312, 55, "…", TEXT, 28)
+    for i, (x, y, r) in enumerate(pos, 1):
+        s.force(x - r, y, x - r, y - 42, f"T_{i}", YELLOW, -7, 4, "end").force(x + r, y, x + r, y - 42, f"T_{i}")
+        s.line(x - 16, y, x, y, RED, 1.5).force(x - 16, y, x - 16, y + r + 38, "Mg", RED, -7, 0, "end")
+        if i > 1:
+            s.force(x, y, x, y + 46, f"T_{i-1}", GREEN, 8, 0)
+    s.text(500, 170, "2Tᵢ = Tᵢ₋₁ + Mg", TEXT, 19)
+    s.text(500, 215, "far away Tᵢ → A", TEXT, 18).text(500, 255, "A = (A + Mg)/2", TEXT, 19).text(500, 300, "A = Mg", YELLOW, 22)
     return s.svg()
 
 
@@ -742,13 +815,15 @@ def hooke_young():
 
 @fig
 def hooke_vessel():
-    s = S(620, 290, "A vessel on a spring compresses it: 8 newtons per 10 centimetres")
-    for x, level, lab, sh in ((130, 40, "8 N → 10 cm", 0), (360, 74, "16 N → 20 cm", 34)):
-        s.ground(x - 70, x + 70, 260)
-        s.spring(x, 150 + sh, x, 260, 7, 14).rect(x - 50, 55 + sh, 100, 95, MUTED, "none")
-        s.rect(x - 48, 148 + sh - level, 96, level, BLUE)
-        s.text(x, 285, lab, TEXT, 16)
-    s.text(535, 120, "k = 80 N/m", YELLOW, 19)
+    s = S(660, 340, "A vessel on a spring compresses it: weight and spring force in two cases")
+    for x, level, lab, sh, w in ((130, 40, "8 N → 10 cm", 0, "8 N"), (390, 74, "16 N → 20 cm", 34, "16 N")):
+        s.ground(x - 70, x + 70, 290)
+        s.spring(x, 180 + sh, x, 290, 7, 14).rect(x - 50, 85 + sh, 100, 95, MUTED, "none")
+        s.rect(x - 48, 178 + sh - level, 96, level, BLUE)
+        s.force(x - 20, 180 + sh, x - 20, 70 + sh, "F = " + w, GREEN, -6, 0, "end")
+        s.force(x + 20, 160 + sh, x + 20, 270 + sh * .4, "W = " + w, RED, 8, -4)
+        s.text(x, 325, lab, TEXT, 16)
+    s.text(580, 140, "k = 80 N/m", YELLOW, 19)
     return s.svg()
 
 
@@ -757,6 +832,7 @@ def hooke_load():
     s = S(480, 230, "A spring with a one newton load is stretched by ten centimetres")
     s.ground(80, 200, 30, True).spring(140, 30, 140, 150, 8, 12).rect(110, 150, 60, 46).text(140, 180, "1 N", BLUE)
     s.line(200, 105, 200, 150, ORANGE, 2).text(240, 133, "10 cm", ORANGE, 16).text(370, 110, "k = F/Δl", TEXT, 19).text(370, 150, "= 10 N/m", YELLOW, 19)
+    s.force(125, 150, 125, 90, "F = 1 N", GREEN, -8, 4, "end").force(140, 180, 140, 225, "W = 1 N", RED, 8, -6)
     return s.svg()
 
 
@@ -769,6 +845,7 @@ def hooke_two_springs():
     s.path("M120,150 A30,30 0 0 0 180,150", TEXT, 2).line(150, 150, 150, 215, TEXT).arrow(150, 205, 150, 270, YELLOW)
     s.text(92, 95, "2k", GREEN, 18).text(205, 95, "k", BLUE, 18).text(175, 260, "F", YELLOW, 19)
     s.text(390, 100, "F/2 in each spring", TEXT, 16).text(390, 140, "Δx = (F/4k + F/2k)/2", TEXT, 17).text(390, 185, "k_eq = 8k/3", YELLOW, 20)
+    s.force(120, 150, 120, 100, "F/2", ORANGE, -8, 22, "end").force(180, 150, 180, 100, "F/2", ORANGE, 8, 22)
     return s.svg()
 
 
@@ -785,23 +862,44 @@ def hooke_pulley_speed():
 # ================= 8. Трение =================
 @fig
 def fric_rough():
-    s = S(640, 230, "Under magnification the touching surfaces are rough and their bumps catch")
-    s.ground(50, 300, 160).rect(100, 100, 130, 60).arrow(165, 148, 75, 148, RED).arrow(165, 170, 255, 170, GREEN)
-    s.circle(480, 115, 95, MUTED).line(230, 160, 392, 130, MUTED, 1.4, "5 5")
+    s = S(640, 265, "Under magnification the touching surfaces are rough and their bumps catch")
+    s.ground(40, 320, 160).rect(100, 96, 130, 62)
+    s.force(230, 127, 305, 127, "F", YELLOW, -6, -9)
+    s.force(165, 154, 70, 154, "F_fr", RED, 4, -10, "middle")
+    s.force(165, 127, 165, 45, "N", GREEN).force(165, 127, 165, 215, "mg", ORANGE)
+    s.circle(480, 115, 95, MUTED).line(230, 158, 392, 130, MUTED, 1.4, "5 5")
     s.path("M400,95 L420,115 L438,92 L458,122 L478,96 L500,118 L520,90 L540,116 L560,98", BLUE, 3)
     s.path("M398,135 L418,112 L440,138 L460,116 L482,140 L502,114 L522,140 L542,118 L562,132", ORANGE, 3)
-    s.text(165, 212, "there is a gap between the bodies", MUTED, 15)
+    s.text(320, 250, "there is a gap between the bodies", MUTED, 15)
     return s.svg()
 
 
 @fig
 def fric_dir():
-    s = S(760, 230, "Direction of friction: kinetic, static and on an incline")
-    s.ground(40, 220, 140).rect(90, 95, 70, 45).arrow(160, 117, 220, 117, GREEN).arrow(105, 138, 40, 138, RED).text(200, 100, "v", GREEN, 18).text(60, 125, "F_fr", RED, 16).text(130, 200, "kinetic", TEXT, 16)
-    s.ground(300, 480, 140).rect(350, 95, 70, 45).arrow(420, 117, 480, 117, YELLOW).arrow(365, 138, 305, 138, RED).text(465, 100, "F", YELLOW, 18).text(322, 125, "F_fr", RED, 16).text(390, 200, "static", TEXT, 16)
-    s.line(550, 165, 740, 75, TEXT, 2)
-    s.path("M610,137 L592,98 L646,73 L664,112 Z", BLUE, 2.5, CELL).arrow(637, 125, 706, 92, RED).arrow(627, 105, 605, 58, GREEN).arrow(627, 105, 627, 180, ORANGE)
-    s.text(718, 118, "F_fr", RED, 16).text(585, 52, "N", GREEN, 18).text(655, 178, "mg", ORANGE, 15).text(650, 215, "on a slope: static", TEXT, 16)
+    s = S(760, 290, "Direction of friction: kinetic, static and on an incline, with all forces")
+    for x0, caption, kinetic in ((125, "kinetic", True), (380, "static", False)):
+        s.ground(x0 - 100, x0 + 100, 170).rect(x0 - 38, 118, 76, 50)
+        s.force(x0, 143, x0, 65, "N", GREEN).force(x0, 143, x0, 228, "mg", ORANGE)
+        s.force(x0, 164, x0 - 85, 164, "F_fr", RED, 8, -10, "middle")
+        if kinetic:
+            s.arrow(x0 + 20, 105, x0 + 85, 105, BLUE, 2.5, "6 5").text(x0 + 80, 93, "v", BLUE, 18)
+        else:
+            s.force(x0 + 38, 143, x0 + 100, 143, "F", YELLOW, -8, -9)
+        s.text(x0, 268, caption, TEXT, 16)
+    # наклонная плоскость: u вдоль склона вверх, n по нормали от поверхности
+    ux, uy = .903, -.430
+    nx, ny = uy, -ux
+    px, py = 635, 170
+    P = lambda a, b: (px + a * ux + b * nx, py + a * uy + b * ny)
+    s.line(*P(-115, 0), *P(115, 0), TEXT, 2)
+    for a in range(-105, 115, 16):
+        s.line(*P(a, 0), *P(a - 10, -9), MUTED, 1.4)
+    corners = [P(-38, 2), P(38, 2), P(38, 50), P(-38, 50)]
+    s.path("M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in corners) + " Z", BLUE, 2, CELL)
+    cx, cy = P(0, 26)
+    s.force(cx, cy, *P(0, 112), "N", GREEN, -8, 0, "end").force(cx, cy, cx, cy + 88, "mg", ORANGE)
+    s.force(*P(0, 6), *P(88, 6), "F_fr", RED, -6, -14, "end")
+    s.text(645, 268, "on a slope: static", TEXT, 16)
     return s.svg()
 
 
@@ -859,12 +957,12 @@ def st_strings():
 
 @fig
 def st_board_split():
-    s = S(640, 230, "A board at a table edge split into parts weighing two thirds and one third")
-    s.rect(60, 130, 330, 20, MUTED).rect(210, 108, 330, 22)
-    s.dot(390, 130, YELLOW, 6).text(390, 175, "O", YELLOW)
-    s.arrow(300, 119, 300, 195, RED).arrow(465, 119, 465, 180, RED).arrow(540, 119, 540, 200, GREEN)
-    s.text(255, 195, "2mg/3", RED, 16).text(430, 190, "mg/3", RED, 16).text(565, 195, "F", GREEN, 19)
-    s.text(345, 95, "L/3", MUTED, 14).text(427, 95, "L/6", MUTED, 14).text(502, 95, "L/6", MUTED, 14)
+    s = S(640, 240, "A board at a table edge split into parts weighing two thirds and one third")
+    s.rect(60, 130, 370, 20, MUTED).rect(210, 108, 330, 22).line(430, 100, 430, 130, MUTED, 1.4, "4 4")
+    s.dot(430, 130, YELLOW, 6).text(448, 172, "O", YELLOW)
+    s.force(320, 119, 320, 195, "2mg/3", RED, -8, 0, "end").force(485, 119, 485, 190, "mg/3", RED)
+    s.force(540, 119, 540, 205, "F", GREEN).force(430, 130, 430, 40, "N", GREEN)
+    s.text(375, 95, "L/3", MUTED, 14).text(458, 95, "L/6", MUTED, 14).text(513, 95, "L/6", MUTED, 14)
     return s.svg()
 
 

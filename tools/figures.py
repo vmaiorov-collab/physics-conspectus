@@ -26,6 +26,11 @@ class S:
         px, py = 5.5 * -math.sin(a), 5.5 * math.cos(a)
         return self.raw(f'<path d="M{x2:.1f},{y2:.1f} L{bx+px:.1f},{by+py:.1f} L{bx-px:.1f},{by-py:.1f}z" class="solid" fill="{c}"/>')
 
+    def force(self, x1, y1, x2, y2, label="", c=YELLOW, dx=9, dy=4, anchor="start", size=14):
+        """Стрелка силы с подписью у острия."""
+        self.arrow(x1, y1, x2, y2, c)
+        return self.text(x2 + dx, y2 + dy, label, c, size, anchor) if label else self
+
     def text(self, x, y, s, c=TEXT, size=17, anchor="middle", it=False):
         st = ' font-style="italic"' if it else ""
         # "x_end" -> x с нижним индексом
@@ -337,13 +342,15 @@ def pul_cascade():
 
 @fig
 def lab_weigh():
-    s = S(640, 300, "Weighing a heavy load with a weak newtonmeter: knot, slanted string, horizontal force")
+    s = S(640, 345, "Weighing a heavy load with a weak newtonmeter: knot, slanted string, horizontal force")
     s.ground(110, 230, 40, True).line(170, 40, 300, 190, BLUE, 3).dot(300, 190, TEXT, 6)
     s.line(300, 190, 300, 235, TEXT).rect(268, 235, 64, 45).text(300, 264, "m", BLUE)
     s.arrow(300, 190, 420, 190, YELLOW).rect(420, 176, 130, 28, ORANGE).text(485, 196, "newtonmeter", ORANGE, 14)
     s.arrow(300, 190, 232, 112, GREEN).text(278, 125, "T", GREEN, 19).text(370, 175, "F", YELLOW, 19)
     s.line(170, 190, 300, 190, MUTED, 1.5, "6 6").line(170, 40, 170, 190, MUTED, 1.5, "6 6")
     s.text(235, 215, "x", MUTED, 18, it=True).text(150, 120, "y", MUTED, 18, it=True).text(262, 92, "l", MUTED, 18, it=True)
+    s.force(300, 190, 300, 232, "W", RED, 8, -8)
+    s.force(300, 280, 300, 332, "mg", RED, 8, -6)
     return s.svg()
 
 
@@ -373,16 +380,21 @@ def hooke_connect():
 
 @fig
 def hooke_tasks():
-    s = S(760, 330, "Diagrams for the spring combination problems")
+    s = S(760, 345, "Diagrams for the spring combination problems, with forces")
     s.text(130, 25, "problem 1", MUTED, 15).text(390, 25, "problem 2", MUTED, 15).text(630, 25, "problem 3", MUTED, 15)
     s.ground(60, 200, 45, True).spring(130, 45, 130, 115).line(100, 115, 160, 115, TEXT, 3)
     s.spring(100, 115, 100, 205, 6, 8, BLUE).spring(160, 115, 160, 205, 6, 8, BLUE).line(100, 205, 160, 205, TEXT, 3).spring(130, 205, 130, 290)
-    s.text(165, 80, "10", GREEN).text(197, 165, "10 and 10", BLUE, 15).text(165, 255, "10 N/m", GREEN, 15)
+    s.text(165, 80, "10", GREEN).text(218, 165, "10 and 10", BLUE, 15).text(165, 255, "10 N/m", GREEN, 15)
     s.ground(320, 460, 45, True).spring(390, 45, 390, 140).pulley(390, 172, 30).line(390, 140, 390, 172, TEXT)
     s.line(360, 172, 360, 290, TEXT).ground(335, 385, 290).arrow(420, 172, 420, 270, YELLOW).text(440, 260, "F", YELLOW).text(420, 95, "k", GREEN)
     s.ground(560, 700, 45, True).spring(630, 45, 630, 125).pulley(630, 175, 30).line(630, 125, 630, 175, TEXT)
     s.spring(600, 175, 600, 295, 7, 8, BLUE).ground(575, 625, 295).arrow(660, 175, 660, 275, YELLOW).text(680, 265, "F", YELLOW)
     s.text(660, 90, "k", GREEN).text(573, 240, "k", BLUE)
+    s.force(130, 290, 130, 325, "F", YELLOW, 9, -4).force(130, 115, 130, 82, "F", GREEN, -14, 6, "end")
+    s.force(100, 115, 100, 148, "F/2", ORANGE, -7, 0, "end").force(160, 115, 160, 148, "F/2", ORANGE, 8, 0)
+    s.force(130, 205, 130, 238, "F", ORANGE, -9, 0, "end").force(100, 205, 100, 172, "", GREEN).force(160, 205, 160, 172, "", GREEN)
+    s.force(390, 172, 390, 128, "2F", GREEN, 8, 8).force(360, 172, 360, 225, "F", ORANGE, -8, 0, "end")
+    s.force(630, 175, 630, 130, "2F", GREEN, 8, 8).force(600, 175, 600, 220, "F", ORANGE, -8, 0, "end")
     return s.svg()
 
 
@@ -439,24 +451,35 @@ def st_box():
     s.path("M270,187 L460,187 A22,22 0 0 0 460,143 L370,126 A26,26 0 0 1 370,74 L450,74", TEXT, 2)
     s.arrow(450, 74, 515, 74, YELLOW).text(485, 60, "F = 15 N", YELLOW, 15)
     s.arrow(270, 100, 330, 100, GREEN).text(305, 88, "2F", GREEN, 15).arrow(270, 187, 330, 187, GREEN).text(305, 177, "F", GREEN, 15)
-    s.arrow(140, 193, 80, 193, RED).text(100, 178, "16 N", RED, 15).arrow(140, 110, 70, 110, ORANGE).text(100, 95, "f = ?", ORANGE, 16)
+    s.arrow(200, 196, 80, 196, RED).text(100, 178, "16 N", RED, 15).arrow(140, 110, 70, 110, ORANGE).text(100, 95, "f = ?", ORANGE, 16)
+    s.force(205, 150, 205, 235, "Mg", RED).force(230, 200, 230, 45, "N", GREEN)
+    s.force(370, 74, 425, 74, "F", ORANGE, -4, -9).force(370, 126, 424, 136, "F", ORANGE, -4, -9)
+    s.force(370, 100, 322, 100, "", GREEN).text(325, 118, "2F", GREEN, 14)
     return s.svg()
 
 
 @fig
 def st_friction_pulley():
-    s = S(520, 320, "A block held by friction; its string goes to a movable pulley of mass half m carrying m")
-    s.ground(40, 290, 90).wall(90, 290, 290, False).rect(90, 40, 90, 50).text(135, 72, "M", BLUE)
-    s.pulley(318, 66, 20).line(180, 46, 318, 46, TEXT).line(338, 66, 338, 175, TEXT).line(290, 90, 318, 66, MUTED, 2)
-    s.pulley(338, 200, 28).line(310, 200, 310, 290, TEXT).ground(285, 335, 290).line(366, 200, 366, 235, TEXT)
-    s.rect(346, 235, 40, 34, GREEN).text(366, 258, "m", GREEN).text(400, 195, "m/2", ORANGE, 15, "start")
-    s.arrow(90, 82, 40, 82, RED).text(56, 68, "F_fr", RED, 15).text(380, 115, "T = ?", YELLOW, 18, "start")
+    s = S(580, 420, "A block held by friction and a movable pulley of mass half m carrying m, with all forces")
+    s.ground(30, 290, 130).wall(130, 380, 290, False).rect(90, 80, 90, 50).text(115, 100, "M", BLUE)
+    s.line(290, 130, 330, 108, MUTED, 2).pulley(330, 108, 22).line(180, 86, 330, 86, TEXT)
+    s.path("M330,86 A22,22 0 0 1 352,108", TEXT, 2).line(352, 108, 352, 250, TEXT)
+    s.pulley(352, 250, 30).path("M320,250 A32,32 0 0 1 384,250", TEXT, 2)
+    s.line(320, 250, 320, 380, TEXT).ground(295, 350, 380).line(384, 250, 384, 320, TEXT)
+    s.rect(364, 320, 40, 34, GREEN).text(384, 342, "m", GREEN)
+    s.force(110, 128, 45, 128, "F_fr", RED, 0, -9, "middle")
+    s.force(180, 86, 245, 86, "T", YELLOW, -4, -9)
+    s.force(150, 105, 150, 35, "N", GREEN).force(150, 105, 150, 190, "Mg", ORANGE)
+    s.force(352, 250, 352, 180, "T", YELLOW).force(320, 250, 320, 320, "mg", GREEN, -7, 0, "end")
+    s.force(384, 250, 384, 290, "mg", GREEN).force(352, 258, 352, 356, "mg/2", ORANGE, -6, 6, "end")
+    s.force(384, 320, 384, 294, "", GREEN).force(384, 354, 384, 405, "mg", RED)
+    s.text(500, 150, "T = ?", YELLOW, 19)
     return s.svg()
 
 
 @fig
 def st_lever():
-    s = S(640, 290, "Lever: left load through a movable pulley, right load attached directly")
+    s = S(640, 305, "Lever: left load through a movable pulley, right load attached directly")
     s.ground(50, 150, 35, True).line(80, 35, 80, 170, TEXT).path("M80,170 A25,25 0 0 0 130,170", TEXT, 2).line(130, 170, 130, 100, TEXT)
     s.pulley(105, 170, 25).line(105, 170, 105, 215, TEXT).rect(85, 215, 40, 36).text(105, 238, "m₁", BLUE, 15)
     s.rect(130, 88, 400, 12).support(430, 100).text(430, 150, "O", TEXT)
@@ -464,6 +487,10 @@ def st_lever():
     s.arrow(130, 88, 130, 45, YELLOW).text(170, 55, "m₁g/2", YELLOW, 15)
     s.arrow(555, 200, 555, 260, RED).text(590, 255, "m₂g", RED, 15)
     s.text(280, 78, "l", TEXT, 19, it=True).text(480, 78, "L − l", TEXT, 17, it=True)
+    s.force(80, 170, 80, 125, "T", YELLOW, -7, 0, "end").force(130, 170, 130, 125, "T", YELLOW)
+    s.force(105, 170, 105, 212, "m_1g", GREEN, 8, -8).force(105, 251, 105, 288, "m_1g", RED)
+    s.force(105, 215, 105, 190, "", GREEN).force(430, 100, 430, 45, "N", GREEN, 8, 8)
+    s.force(530, 100, 530, 150, "m_2g", ORANGE, -8, 0, "end").force(530, 200, 530, 168, "", ORANGE)
     return s.svg()
 
 
@@ -475,54 +502,65 @@ def st_rod():
     s.arrow(250, 137, 250, 215, RED).text(280, 205, "Mg", RED, 16).line(175, 144, 175, 175, TEXT).rect(155, 175, 40, 32).text(175, 197, "m", BLUE)
     s.arrow(175, 207, 175, 252, RED).text(148, 248, "mg", RED, 15)
     s.text(90, 165, "A", TEXT).text(412, 165, "B", TEXT).text(175, 120, "C: AC = L/4", MUTED, 14)
+    s.force(175, 144, 175, 168, "", GREEN).force(175, 175, 175, 152, "", GREEN)
     return s.svg()
 
 
 @fig
 def st_seven():
-    s = S(640, 250, "Uniform lever of seven divisions: pivot, centre of gravity and force from a movable pulley")
+    s = S(640, 290, "Uniform lever of seven divisions with weight, string force and pivot reaction")
     x = lambda i: 70 + i * 60
-    s.rect(x(0), 90, 420, 14)
+    s.rect(x(0), 110, 420, 14)
     for i in range(1, 7):
-        s.line(x(i), 90, x(i), 104, MUTED, 1.5)
-    s.support(x(4), 104).dot(x(3.5), 97, RED, 5).arrow(x(3.5), 97, x(3.5), 180, RED).text(x(3.5) - 28, 175, "Mg", RED)
-    s.arrow(x(6), 104, x(6), 180, YELLOW).text(x(6) + 40, 175, "mg/2", YELLOW)
-    s.line(x(0), 90, x(0), 45, TEXT).ground(40, 110, 45, True)
-    s.text(x(3.75), 60, "ℓ/2", RED, 15).line(x(3.5), 70, x(4), 70, RED, 2).text(x(5), 60, "2ℓ", YELLOW, 15).line(x(4), 70, x(6), 70, YELLOW, 2)
-    s.text(320, 232, "ℓ is one division; the left string is slack in equilibrium", MUTED, 14)
+        s.line(x(i), 110, x(i), 124, MUTED, 1.5)
+    s.line(x(0), 110, x(0), 55, TEXT).ground(40, 110, 55, True)
+    s.line(x(6), 110, x(6), 55, TEXT).ground(x(6) - 40, x(6) + 40, 55, True)
+    s.support(x(4), 124).force(x(4), 124, x(4), 72, "N", GREEN, 8, 8)
+    s.dot(x(3.5), 117, RED, 5).force(x(3.5), 117, x(3.5), 215, "Mg", RED, -8, 0, "end")
+    s.force(x(6), 110, x(6), 68, "mg/2", YELLOW)
+    s.text(x(3.75), 235, "ℓ/2", RED, 15).line(x(3.5), 217, x(4), 217, RED, 2).text(x(5), 200, "2ℓ", YELLOW, 15).line(x(4), 207, x(6), 207, YELLOW, 2)
+    s.text(320, 272, "ℓ is one division; the left string is slack", MUTED, 14)
     return s.svg()
 
 
 @fig
 def st_two_masses():
-    s = S(560, 250, "Light rod of length 3a with end loads, hung on a string over a pulley")
-    s.ground(150, 260, 30, True).line(205, 30, 205, 50, TEXT).pulley(205, 70, 20)
-    s.line(185, 70, 185, 110, TEXT).rect(165, 110, 40, 34, ORANGE).text(185, 133, "M", ORANGE)
-    s.line(225, 70, 225, 180, TEXT).line(105, 180, 465, 180, BLUE, 5).dot(225, 180)
-    s.circle(105, 180, 14).circle(465, 180, 14).text(105, 220, "m₁", BLUE).text(465, 220, "m₂", BLUE)
-    s.text(165, 168, "a", TEXT, 18, it=True).text(345, 168, "2a", TEXT, 18, it=True).text(225, 210, "O₁", TEXT, 15)
+    s = S(580, 310, "Light rod of length 3a with end loads on a string over a pulley, with all forces")
+    s.ground(150, 260, 30, True).line(205, 30, 205, 70, TEXT).pulley(205, 70, 20)
+    s.line(185, 70, 185, 125, TEXT).rect(165, 125, 40, 34, ORANGE).text(185, 148, "M", ORANGE)
+    s.line(225, 70, 225, 210, TEXT).line(105, 210, 465, 210, BLUE, 5).dot(225, 210)
+    s.circle(105, 210, 14).circle(465, 210, 14).text(72, 215, "m_1", BLUE).text(498, 215, "m_2", BLUE)
+    s.text(165, 232, "a", TEXT, 18, it=True).text(345, 232, "2a", TEXT, 18, it=True).text(245, 232, "O_1", TEXT, 15)
+    s.force(105, 210, 105, 280, "m_1g", RED).force(465, 210, 465, 270, "m_2g", RED, -8, 0, "end")
+    s.force(225, 210, 225, 150, "Mg", YELLOW)
+    s.force(185, 125, 185, 95, "Mg", YELLOW, -8, 6, "end").force(185, 159, 185, 205, "Mg", RED, -8, -14, "end")
+    s.force(185, 70, 185, 102, "", YELLOW).force(225, 70, 225, 112, "Mg", YELLOW).force(205, 70, 205, 35, "2Mg", GREEN, 24, 12)
     return s.svg()
 
 
 @fig
 def st_table():
-    s = S(760, 230, "A board overhanging a table, and a beam on a platform")
+    s = S(760, 250, "A board overhanging a table by a third, and a beam on a platform overhanging by 0.2, with all forces")
     s.text(190, 26, "a third overhangs", MUTED, 15).text(565, 26, "0.2 of the beam overhangs", MUTED, 15)
-    s.rect(50, 130, 190, 14, MUTED).line(70, 144, 70, 210, TEXT, 4).line(215, 144, 215, 210, TEXT, 4)
-    s.rect(150, 114, 180, 14).arrow(240, 121, 240, 190, RED).text(240, 100, "edge", MUTED, 13).dot(240, 128, YELLOW)
-    s.arrow(330, 121, 330, 190, YELLOW).text(350, 185, "F", YELLOW).dot(240, 121, RED, 5).text(214, 180, "mg", RED, 15)
-    s.ground(420, 620, 150).rect(450, 132, 250, 16).dot(450, 148, YELLOW, 5).text(450, 185, "O", YELLOW)
-    s.arrow(575, 140, 575, 205, RED).text(600, 200, "mg", RED, 15).arrow(700, 132, 700, 55, GREEN).text(728, 70, "F", GREEN)
+    s.rect(50, 130, 190, 14, MUTED).line(70, 144, 70, 225, TEXT, 4).line(215, 144, 215, 225, TEXT, 4)
+    s.rect(120, 114, 180, 14).dot(240, 128, YELLOW).text(262, 150, "edge", MUTED, 13, "start")
+    s.dot(210, 121, RED, 5).force(210, 121, 210, 195, "mg", RED, -7, 0, "end")
+    s.force(240, 128, 240, 50, "N", GREEN).force(300, 121, 300, 190, "F", YELLOW)
+    s.ground(420, 650, 150).rect(450, 132, 250, 16).dot(450, 148, YELLOW, 5).text(450, 185, "O", YELLOW)
+    s.force(575, 140, 575, 215, "mg", RED).force(700, 132, 700, 55, "F", GREEN)
+    s.force(450, 148, 450, 85, "N", GREEN)
     return s.svg()
 
 
 @fig
 def st_sand():
-    s = S(560, 250, "Board on two supports: at one third and at the right end, with a growing load on the left")
-    s.rect(80, 90, 390, 14).support(210, 104).support(470, 104).text(210, 155, "O", TEXT)
-    s.line(80, 104, 80, 170, TEXT).rect(55, 170, 50, 40, ORANGE).text(80, 196, "m(t)", ORANGE, 15)
-    s.dot(275, 97, RED, 5).arrow(275, 97, 275, 180, RED).text(300, 175, "Mg", RED)
-    s.text(145, 78, "L/3", TEXT, 16).text(243, 78, "L/6", MUTED, 15).text(470, 70, "N → 0", GREEN, 16)
+    s = S(580, 290, "Board on two supports at the moment of lift-off, with all forces")
+    s.rect(80, 100, 390, 14).support(210, 114).support(470, 114).text(185, 160, "O", TEXT)
+    s.line(80, 114, 80, 180, TEXT).rect(55, 180, 50, 40, ORANGE).text(80, 206, "m(t)", ORANGE, 15)
+    s.force(80, 114, 80, 160, "mg", ORANGE).force(80, 180, 80, 135, "", ORANGE).force(80, 220, 80, 270, "mg", RED)
+    s.dot(275, 107, RED, 5).force(275, 107, 275, 195, "Mg", RED)
+    s.force(210, 114, 210, 40, "N_O = (M+m)g", GREEN, 8, 6)
+    s.text(145, 90, "L/3", TEXT, 16).text(243, 90, "L/6", MUTED, 15).text(470, 85, "N → 0", GREEN, 16)
     return s.svg()
 
 
