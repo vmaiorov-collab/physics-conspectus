@@ -106,11 +106,9 @@ def index(lessons):
     colors = ["--ic-purple", "--ic-pink", "--ic-green", "--ic-blue", "--ic-yellow"]
     for i, L in enumerate(lessons):
         items = "".join(f"<li>{c.strip()}</li>" for c in L["cards"].split("|"))
-        key = plain(" ".join([L["title"], L["sub"], L["chips"], L["cards"], " ".join(re.findall(r"<h[23][^>]*>(.*?)</h[23]>", L["body"]))])).lower()
-        cards.append(f'<a class="pcard" href="notes/{L["file"]}" data-k="{html.escape(key, quote=True)}"><div class="ph">'
+        cards.append(f'<a class="pcard" href="notes/{L["file"]}"><div class="ph">'
                      f'<span class="badge" style="background:var({colors[i % 5]})">{i+1}</span><h3>{L["title"]}</h3></div>'
                      f'<ul class="tl">{items}</ul><div class="pf"><span>drawings: {L["body"].count("§") // 2}</span><em>→</em></div></a>')
-    drawings = sum(L["body"].count("§") // 2 for L in lessons)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,25 +122,11 @@ def index(lessons):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
-<style>.pcard[hidden]{{display:none}}</style>
 </head>
 <body>
 <div class="page">
 <header class="nav"><div style="display:flex;align-items:center;gap:4px"><a class="brand" href="index.html">physics<i>.</i></a></div><div class="navr"><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">dark theme</button></div></header>
 
-<section class="hero2">
-  <div class="hl">
-    <div class="hmain">
-      <span class="chip">Mechanics</span>
-      <h1><span class="hi">Physics</span> notes</h1>
-      <p>Definitions, derivations, drawings and solved problems. Every picture is redrawn in SVG.</p>
-      <div class="sbox"><div class="search"><input id="q" type="search" placeholder="Search topics: pulleys, moment, spring…" autocomplete="off" aria-label="Search topics"></div></div>
-    </div>
-    <div class="hstats"><div><b>{len(lessons)}</b><span>topics</span></div><div><b>{drawings}</b><span>drawings for topics and problems</span></div><div><b>1</b><span>file per topic, readable offline</span></div></div>
-  </div>
-</section>
-
-<div class="nores" id="nores" hidden>Nothing found.</div>
 <div id="pick">
 <h2 class="big">Topics</h2>
 <nav class="pgrid">{"".join(cards)}</nav>
@@ -150,9 +134,6 @@ def index(lessons):
 <footer class="foot"><a href="https://github.com/vmaiorov-collab/physics-conspectus">source on GitHub</a></footer>
 </div>
 <script>
-(function(){{var q=document.getElementById("q"),cards=[].slice.call(document.querySelectorAll(".pcard")),no=document.getElementById("nores");
-q.addEventListener("input",function(){{var words=q.value.toLowerCase().split(/\\s+/).filter(Boolean),n=0;
-cards.forEach(function(c){{var ok=words.every(function(w){{return c.dataset.k.indexOf(w)>=0}});c.hidden=!ok;if(ok)n++}});no.hidden=n>0}});}})();
 (function(){{var root=document.documentElement,btn=document.getElementById("theme-toggle");
 function label(){{btn.textContent=root.getAttribute("data-theme")==="dark"?"light theme":"dark theme"}}label();
 btn.addEventListener("click",function(){{var next=root.getAttribute("data-theme")==="dark"?"light":"dark";root.setAttribute("data-theme",next);label();try{{localStorage.setItem("conspectusTheme",next)}}catch(e){{}}}});}})();
